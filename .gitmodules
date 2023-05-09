@@ -1,0 +1,6 @@
+[submodule "engine/3rdparty/yaml-cpp"]
+	path = engine/3rdparty/yaml-cpp
+	url = git@github.com:KratosEngine/yaml-cpp.git
+[submodule "engine/3rdparty/spdlog"]
+	path = engine/3rdparty/spdlog
+	url = git@github.com:KratosEngine/spdlog.git
