@@ -1,4 +1,4 @@
-#include "runtime/core/log/logSystem.h"
+#include "runtime/core/log/log_system.h"
 
 #include <spdlog/async.h>
 #include <spdlog/sinks/basic_file_sink.h>
