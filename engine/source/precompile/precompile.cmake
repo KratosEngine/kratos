@@ -29,7 +29,7 @@ elseif(CMAKE_HOST_APPLE)
     set(sys_include "${osx_sdk_platform_path_test}/../../Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1") 
 endif()
 
-set (PARSER_INPUT ${CMAKE_BINARY_DIR}/parser_header.h)
+# set (PARSER_INPUT ${CMAKE_BINARY_DIR}/parser_header.h)
 ### BUILDING ====================================================================================
 set(PRECOMPILE_TARGET "KratosPreCompile")
 
@@ -44,8 +44,8 @@ COMMAND
 COMMAND
   ${CMAKE_COMMAND} -E echo "************************************************************* "
 
-COMMAND
-    ${PRECOMPILE_PARSER} "${KRATOS_PRECOMPILE_PARAMS_PATH}"  "${PARSER_INPUT}"  "${ENGINE_ROOT_DIR}/source" ${sys_include} "kratos" 0
+# COMMAND
+#     ${PRECOMPILE_PARSER} "${KRATOS_PRECOMPILE_PARAMS_PATH}" "${ENGINE_ROOT_DIR}/source" ${sys_include} "kratos" 0
 ### BUILDING ====================================================================================
 COMMAND
     ${CMAKE_COMMAND} -E echo "+++ Precompile finished +++"
