@@ -5,6 +5,7 @@
 #include <unordered_map>
 
 #include "runtime/engine.h"
+#include "editor/include/editor.h"
 
 int main(int argc, char **argv)
 {
@@ -16,10 +17,14 @@ int main(int argc, char **argv)
 
     engine->startEngine(config_file_path.generic_string());
     engine->initialize();
+    
+    // create editor instance
+    Kratos::KratosEditor* editor = new Kratos::KratosEditor();
+    editor->initialize(engine);
+    editor->run();
 
-    while(true) {
-
-    }
+    //clean and destory
+    editor->clear();
     engine->clear();
     engine->shutdownEngine();
 
