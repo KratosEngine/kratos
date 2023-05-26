@@ -9,7 +9,7 @@
 int main(int argc, char **argv)
 {
     std::filesystem::path executable_path(argv[0]);
-    std::filesystem::path config_file_path = "";
+    std::filesystem::path config_file_path = executable_path.parent_path() / "KratosEditor.ini";
 
     // create engine instance
     Kratos::KratosEngine *engine = new Kratos::KratosEngine();
@@ -17,7 +17,9 @@ int main(int argc, char **argv)
     engine->startEngine(config_file_path.generic_string());
     engine->initialize();
 
-    
+    while(true) {
+
+    }
     engine->clear();
     engine->shutdownEngine();
 
