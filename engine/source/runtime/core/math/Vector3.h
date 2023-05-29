@@ -5,7 +5,7 @@
 namespace Kratos
 {
     class Matrix3X3;
-    class Vector3
+    class Vector3   //表示一个三维向量｜一个点
     {
     public:
         // special points

@@ -50,6 +50,7 @@
 
 #if KS_PLATFORM == KS_PLATFORM_WIN
 #include <Windows.h>
+#include <tchar.h>
 #pragma warning(disable:4251) //去除模板导出编译的警告
 #pragma warning(disable:4595) 
 #endif // KS_PLATFORM_WIN

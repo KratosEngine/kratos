@@ -47,10 +47,17 @@ namespace Kratos
 #define FABS(x) fabs(x)
 #endif
 
-#define EPSILON_E3 (KSREAL)(1E-3)
-#define EPSILON_E4 (KSREAL)(1E-4)
-#define EPSILON_E5 (KSREAL)(1E-5)
-#define EPSILON_E6 (KSREAL)(1E-6)
-#define EPSILON_E8 (KSREAL)(1E-8)
+// 用来判断两个物体的位置关系
+#define KSFRONT			0
+#define KSBACK			1
+#define KSON			2
+#define KSCLIPPED		3
+#define KSCULLED		4
+#define KSVISIBLE		5
+#define KSINTERSECT		3
+#define KSOUT			4
+#define KSIN			5
+#define KSNOINTERSECT	6
+
 
 } // namespace Kratos
