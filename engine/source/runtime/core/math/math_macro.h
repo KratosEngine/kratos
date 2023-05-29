@@ -1,11 +1,9 @@
 #pragma once
-#include <math.h>
+
+#include <cmath>
 
 namespace Kratos
 {
-#define IABS(x) abs(x)
-#define LABS(x) labs(x)
-#define LLABS(x) llabs(x)
 
 #define KSFLOAT // 精度
 #ifdef KSFLOAT
