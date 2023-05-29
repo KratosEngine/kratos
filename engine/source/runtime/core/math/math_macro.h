@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cmath>
+#include "runtime/core/base/platform.h"
 
 namespace Kratos
 {
@@ -52,4 +53,4 @@ namespace Kratos
 #define EPSILON_E6 (KSREAL)(1E-6)
 #define EPSILON_E8 (KSREAL)(1E-8)
 
-}
+} // namespace Kratos

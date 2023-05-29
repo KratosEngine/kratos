@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include "runtime/core/math/Math.h"
@@ -60,4 +61,5 @@ namespace Kratos
         //Normalizes the vector
         inline void Normalize();
     };
-}
+    
+} // namespace Kratos

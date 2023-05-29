@@ -119,4 +119,5 @@ namespace Kratos
             Set(0.0f, 0.0f);
         }
     }
-}
+    
+} // namespace Kratos

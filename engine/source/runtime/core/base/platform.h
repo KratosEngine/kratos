@@ -50,4 +50,12 @@
 
 #if KS_PLATFORM == KS_PLATFORM_WIN
 #include <Windows.h>
+#pragma warning(disable:4251) //去除模板导出编译的警告
+#pragma warning(disable:4595) 
 #endif // KS_PLATFORM_WIN
+
+inline void KSMemset(void *pDest, int iC, size_t uiCount)
+{
+    memset(pDest, iC, uiCount);
+}
+

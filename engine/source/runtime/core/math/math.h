@@ -15,5 +15,5 @@ namespace Kratos
 		}
 		static KSREAL sqrt(KSREAL value) { return SQRT(value); }
 	};
-
-}
+	
+} // namespace Kratos

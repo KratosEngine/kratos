@@ -62,4 +62,5 @@ namespace Kratos
         /********************************distance******************************************/
         KSREAL SquaredDistance(const Vector3 &Point) const; // 点和点距离 
     };
-}
+    
+} // namespace Kratos

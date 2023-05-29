@@ -172,10 +172,5 @@ namespace Kratos
         else
             return 0;
     }
-
-    /********************************距离******************************************/
-    KSREAL Vector3::SquaredDistance(const Vector3 &Point) const
-    {
-        return (x * Point.x + y * Point.y + z * Point.z);
-    }
-}
+    
+} // namespace Kratos

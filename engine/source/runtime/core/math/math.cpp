@@ -4,4 +4,4 @@ namespace Kratos
 {
 
 
-}
+} // namespace Kratos
