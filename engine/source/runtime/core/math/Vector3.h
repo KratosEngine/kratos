@@ -4,6 +4,7 @@
 
 namespace Kratos
 {
+    class Matrix3X3;
     class Vector3
     {
     public:
@@ -47,10 +48,10 @@ namespace Kratos
         */
         Vector3 ReflectDir(const Vector3 &N) const;
 
-        Vector3 operator*(KSREAL f) const;
-        Vector3 operator/(KSREAL f) const;
-        Vector3 operator+(KSREAL f) const;
-        Vector3 operator-(KSREAL f) const;
+        Vector3 operator*(KSREAL scalar) const;
+        Vector3 operator/(KSREAL scalar) const;
+        Vector3 operator+(KSREAL scalar) const;
+        Vector3 operator-(KSREAL scalar) const;
 
         Vector3 operator+(const Vector3 &v) const;
         Vector3 operator-(const Vector3 &v) const;
@@ -59,8 +60,10 @@ namespace Kratos
         void operator/=(const Vector3 &v);
         void operator*=(const Vector3 &v);
 
+        Vector3 operator*(const Matrix3X3 &matirx) const;
+
         /********************************distance******************************************/
-        KSREAL SquaredDistance(const Vector3 &Point) const; // 点和点距离 
+        KSREAL SquaredDistance(const Vector3 &Point) const; // 点和点距离
     };
-    
+
 } // namespace Kratos

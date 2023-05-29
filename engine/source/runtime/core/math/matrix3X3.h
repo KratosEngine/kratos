@@ -32,18 +32,29 @@ namespace Kratos
                   KSREAL m10, KSREAL m11, KSREAL m12,
                   KSREAL m20, KSREAL m21, KSREAL m22);
 
-        // void CreateFromDirection(Vector3 &Direction, const Vector3 &Up = Vector3(0, 1, 0));
-        // void CreateRotX(KSREAL a); // 绕x旋转
-        // void CreateRotY(KSREAL a); // 绕y旋转
-        // void CreateRotZ(KSREAL a); // 绕z旋转
+        Matrix3X3 operator*(KSREAL scalar) const;
+        Matrix3X3 operator+(KSREAL scalar) const;
+        Matrix3X3 operator-(KSREAL scalar) const;
+        Matrix3X3 operator+(const Matrix3X3 &matirx) const;
+        Matrix3X3 operator-(const Matrix3X3 &matirx) const;
+
+        void operator*=(KSREAL scalar);
+        void operator+=(KSREAL scalar);
+        void operator-=(KSREAL scalar);
+        void operator+=(const Matrix3X3 &matirx);
+        void operator-=(const Matrix3X3 &matirx);
+        bool operator==(const Matrix3X3 &v) const;
+
+        void CreateRot(const Vector3 &U, const Vector3 &V, const Vector3 &N); // 创建旋转矩阵
+        void CreateScale(KSREAL fX, KSREAL fY, KSREAL fZ);                    // 创建缩放矩阵
 
         /*********************************** inline *************************************/
         inline void Identity(void);                                // 单位矩阵
         inline void TransposeOf(const Matrix3X3 &matirx);          // 转置
         inline void InverseOf(const Matrix3X3 &matirx);            // 求逆
         inline KSREAL Det() const;                                 // 求判别式
-        // inline Matrix3X3 operator*(const Matrix3X3 &matirx) const; // 矩阵相乘
-        // inline Vector3 operator*(const Vector3 &vc) const;         // 矩阵和向量乘
+        inline Matrix3X3 operator*(const Matrix3X3 &matirx) const; // 矩阵相乘
+        inline Vector3 operator*(const Vector3 &vc) const;         // 矩阵和向量乘
     };
 
 } // namespace Kratos

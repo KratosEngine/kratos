@@ -42,6 +42,192 @@ namespace Kratos
         _22 = m22;
     }
 
+    Matrix3X3 Matrix3X3::operator*(KSREAL scalar) const
+    {
+        Matrix3X3 Temp;
+        Temp.m[0] = m[0] * scalar;
+        Temp.m[1] = m[1] * scalar;
+        Temp.m[2] = m[2] * scalar;
+        Temp.m[3] = m[3] * scalar;
+        Temp.m[4] = m[4] * scalar;
+        Temp.m[5] = m[5] * scalar;
+        Temp.m[6] = m[6] * scalar;
+        Temp.m[7] = m[7] * scalar;
+        Temp.m[8] = m[8] * scalar;
+
+        return Temp;
+    }
+
+    Matrix3X3 Matrix3X3::operator+(KSREAL scalar) const
+    {
+        Matrix3X3 Temp;
+        Temp.m[0] = m[0] + scalar;
+        Temp.m[1] = m[1] + scalar;
+        Temp.m[2] = m[2] + scalar;
+        Temp.m[3] = m[3] + scalar;
+        Temp.m[4] = m[4] + scalar;
+        Temp.m[5] = m[5] + scalar;
+        Temp.m[6] = m[6] + scalar;
+        Temp.m[7] = m[7] + scalar;
+        Temp.m[8] = m[8] + scalar;
+
+        return Temp;
+    }
+
+    Matrix3X3 Matrix3X3::operator-(KSREAL scalar) const
+    {
+        Matrix3X3 Temp;
+        Temp.m[0] = m[0] - scalar;
+        Temp.m[1] = m[1] - scalar;
+        Temp.m[2] = m[2] - scalar;
+        Temp.m[3] = m[3] - scalar;
+        Temp.m[4] = m[4] - scalar;
+        Temp.m[5] = m[5] - scalar;
+        Temp.m[6] = m[6] - scalar;
+        Temp.m[7] = m[7] - scalar;
+        Temp.m[8] = m[8] - scalar;
+
+        return Temp;
+    }
+
+    Matrix3X3 Matrix3X3::operator+(const Matrix3X3 &matirx) const
+    {
+
+        Matrix3X3 Temp;
+        Temp.m[0] = m[0] + matirx.m[0];
+        Temp.m[1] = m[1] + matirx.m[1];
+        Temp.m[2] = m[2] + matirx.m[2];
+        Temp.m[3] = m[3] + matirx.m[3];
+        Temp.m[4] = m[4] + matirx.m[4];
+        Temp.m[5] = m[5] + matirx.m[5];
+        Temp.m[6] = m[6] + matirx.m[6];
+        Temp.m[7] = m[7] + matirx.m[7];
+        Temp.m[8] = m[8] + matirx.m[8];
+
+        return Temp;
+    }
+
+    Matrix3X3 Matrix3X3::operator-(const Matrix3X3 &matirx) const
+    {
+
+        Matrix3X3 Temp;
+        Temp.m[0] = m[0] - matirx.m[0];
+        Temp.m[1] = m[1] - matirx.m[1];
+        Temp.m[2] = m[2] - matirx.m[2];
+        Temp.m[3] = m[3] - matirx.m[3];
+        Temp.m[4] = m[4] - matirx.m[4];
+        Temp.m[5] = m[5] - matirx.m[5];
+        Temp.m[6] = m[6] - matirx.m[6];
+        Temp.m[7] = m[7] - matirx.m[7];
+        Temp.m[8] = m[8] - matirx.m[8];
+
+        return Temp;
+    }
+
+    void Matrix3X3::operator*=(KSREAL scalar)
+    {
+        m[0] = m[0] * scalar;
+        m[1] = m[1] * scalar;
+        m[2] = m[2] * scalar;
+        m[3] = m[3] * scalar;
+        m[4] = m[4] * scalar;
+        m[5] = m[5] * scalar;
+        m[6] = m[6] * scalar;
+        m[7] = m[7] * scalar;
+        m[8] = m[8] * scalar;
+    }
+
+    void Matrix3X3::operator+=(KSREAL scalar)
+    {
+        m[0] = m[0] + scalar;
+        m[1] = m[1] + scalar;
+        m[2] = m[2] + scalar;
+        m[3] = m[3] + scalar;
+        m[4] = m[4] + scalar;
+        m[5] = m[5] + scalar;
+        m[6] = m[6] + scalar;
+        m[7] = m[7] + scalar;
+        m[8] = m[8] + scalar;
+    }
+
+    void Matrix3X3::operator-=(KSREAL scalar)
+    {
+        m[0] = m[0] - scalar;
+        m[1] = m[1] - scalar;
+        m[2] = m[2] - scalar;
+        m[3] = m[3] - scalar;
+        m[4] = m[4] - scalar;
+        m[5] = m[5] - scalar;
+        m[6] = m[6] - scalar;
+        m[7] = m[7] - scalar;
+        m[8] = m[8] - scalar;
+    }
+
+    void Matrix3X3::operator+=(const Matrix3X3 &matirx)
+    {
+        m[0] = m[0] + matirx.m[0];
+        m[1] = m[1] + matirx.m[1];
+        m[2] = m[2] + matirx.m[2];
+        m[3] = m[3] + matirx.m[3];
+        m[4] = m[4] + matirx.m[4];
+        m[5] = m[5] + matirx.m[5];
+        m[6] = m[6] + matirx.m[6];
+        m[7] = m[7] + matirx.m[7];
+        m[8] = m[8] + matirx.m[8];
+    }
+    /*----------------------------------------------------------------*/
+    void Matrix3X3::operator-=(const Matrix3X3 &matirx)
+    {
+        m[0] = m[0] - matirx.m[0];
+        m[1] = m[1] - matirx.m[1];
+        m[2] = m[2] - matirx.m[2];
+        m[3] = m[3] - matirx.m[3];
+        m[4] = m[4] - matirx.m[4];
+        m[5] = m[5] - matirx.m[5];
+        m[6] = m[6] - matirx.m[6];
+        m[7] = m[7] - matirx.m[7];
+        m[8] = m[8] - matirx.m[8];
+    }
+
+    bool Matrix3X3::operator==(const Matrix3X3 &v) const
+    {
+        for (unsigned int i = 0; i < 3; i++)
+        {
+            for (unsigned int j = 0; j < 3; j++)
+            {
+                if (Math::abs(M[i][j] - v.M[i][j]) > EPSILON_E4)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    void Matrix3X3::CreateRot(const Vector3 &U, const Vector3 &V, const Vector3 &N)
+    {
+        _00 = U.x;
+        _01 = U.y;
+        _02 = U.z;
+
+        _10 = V.x;
+        _11 = V.y;
+        _12 = V.z;
+
+        _20 = N.x;
+        _21 = N.y;
+        _22 = N.z;
+    }
+
+    void Matrix3X3::CreateScale(KSREAL fX, KSREAL fY, KSREAL fZ)
+    {
+        Identity();
+        _00 = fX;
+        _11 = fY;
+        _22 = fZ;
+    }
+
+    /*********************************** inline *************************************/
     inline void Matrix3X3::Identity(void)
     {
         KSMemset(m, 0, sizeof(Matrix3X3));
@@ -90,6 +276,26 @@ namespace Kratos
         return (M[0][0] * (M[1][1] * M[2][2] - M[2][1] * M[1][2]) -
                 M[0][1] * (M[1][0] * M[2][2] - M[2][0] * M[1][2]) +
                 M[0][2] * (M[1][0] * M[2][1] - M[2][0] * M[1][1]));
+    }
+
+    inline Matrix3X3 Matrix3X3::operator*(const Matrix3X3 &matirx) const
+    {
+        Matrix3X3 mResult;
+        mResult.M[0][0] = 0;
+        mResult.M[1][1] = 0;
+        mResult.M[2][2] = 0;
+
+        for (unsigned char i = 0; i < 3; i++)
+            for (unsigned char j = 0; j < 3; j++)
+                for (unsigned int k = 0; k < 3; k++)
+                    mResult.M[i][j] += M[i][k] * matirx.M[k][j];
+
+        return mResult;
+    }
+
+    inline Vector3 Matrix3X3::operator*(const Vector3 &vc) const
+    {
+        return vc * (*this);
     }
 
 } // namespace Kratos

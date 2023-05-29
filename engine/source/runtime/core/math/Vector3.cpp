@@ -1,4 +1,5 @@
 #include "runtime/core/math/vector3.h"
+#include "runtime/core/math/matrix3X3.h"
 
 namespace Kratos
 {
@@ -49,13 +50,13 @@ namespace Kratos
 
     inline void Vector3::Normalize()
     {
-        KSREAL f = x * x + y * y + z * z;
-        if (f > EPSILON_E4)
+        KSREAL scalar = x * x + y * y + z * z;
+        if (scalar > EPSILON_E4)
         {
-            f = (KSREAL)1.0f / SQRT(f);
-            x *= f;
-            y *= f;
-            z *= f;
+            scalar = (KSREAL)1.0f / SQRT(scalar);
+            x *= scalar;
+            y *= scalar;
+            z *= scalar;
         }
         else
         {
@@ -88,33 +89,52 @@ namespace Kratos
         z = v2.z - v1.z;
     }
 
+    bool Vector3::IsParallel(const Vector3 &Vector) const
+    {
+        KSREAL t0, t1;
+        bool temp = 0;
+        t0 = x * Vector.y;
+        t1 = y * Vector.x;
+
+        if (Math::abs(t0 - t1) > EPSILON_E4)
+            temp = 1;
+
+        t0 = y * Vector.z;
+        t1 = z * Vector.y;
+
+        if (Math::abs(t0 - t1) > EPSILON_E4 && temp)
+            return 1;
+        else
+            return 0;
+    }
+
     Vector3 Vector3::ReflectDir(const Vector3 &N) const
     {
         return N * Dot(N) * 2 + *this;
     }
 
-    Vector3 Vector3::operator*(KSREAL f) const
+    Vector3 Vector3::operator*(KSREAL scalar) const
     {
 
-        return Vector3(x * f, y * f, z * f);
+        return Vector3(x * scalar, y * scalar, z * scalar);
     }
 
-    Vector3 Vector3::operator/(KSREAL f) const
+    Vector3 Vector3::operator/(KSREAL scalar) const
     {
 
-        return Vector3(x / f, y / f, z / f);
+        return Vector3(x / scalar, y / scalar, z / scalar);
     }
 
-    Vector3 Vector3::operator+(KSREAL f) const
+    Vector3 Vector3::operator+(KSREAL scalar) const
     {
 
-        return Vector3(x + f, y + f, z + f);
+        return Vector3(x + scalar, y + scalar, z + scalar);
     }
 
-    Vector3 Vector3::operator-(KSREAL f) const
+    Vector3 Vector3::operator-(KSREAL scalar) const
     {
 
-        return Vector3(x - f, y - f, z - f);
+        return Vector3(x - scalar, y - scalar, z - scalar);
     }
 
     Vector3 Vector3::operator+(const Vector3 &v) const
@@ -154,23 +174,13 @@ namespace Kratos
         y *= v.y, z *= v.z;
     }
 
-    bool Vector3::IsParallel(const Vector3 &Vector) const
+    Vector3 Vector3::operator*(const Matrix3X3 &matirx) const
     {
-        KSREAL t0, t1;
-        bool temp = 0;
-        t0 = x * Vector.y;
-        t1 = y * Vector.x;
-
-        if (Math::abs(t0 - t1) > EPSILON_E4)
-            temp = 1;
-
-        t0 = y * Vector.z;
-        t1 = z * Vector.y;
-
-        if (Math::abs(t0 - t1) > EPSILON_E4 && temp)
-            return 1;
-        else
-            return 0;
+        Vector3 vcResult;
+        vcResult.x = x * matirx._00 + y * matirx._10 + z * matirx._20;
+        vcResult.y = x * matirx._01 + y * matirx._11 + z * matirx._21;
+        vcResult.z = x * matirx._02 + y * matirx._12 + z * matirx._22;
+        return vcResult;
     }
-    
+
 } // namespace Kratos
