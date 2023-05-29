@@ -54,6 +54,7 @@
 #pragma warning(disable:4595) 
 #endif // KS_PLATFORM_WIN
 
+#include <string.h>
 inline void KSMemset(void *pDest, int iC, size_t uiCount)
 {
     memset(pDest, iC, uiCount);

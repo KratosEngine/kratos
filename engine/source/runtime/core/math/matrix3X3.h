@@ -1,6 +1,5 @@
 #pragma once
 
-#include "runtime/core/math/Math.h"
 #include "runtime/core/math/vector3.h"
 
 namespace Kratos

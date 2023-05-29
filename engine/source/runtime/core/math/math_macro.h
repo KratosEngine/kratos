@@ -26,7 +26,7 @@ namespace Kratos
 #define LOG(x) logf(x)
 #define LOG2(x) LOG(x) * 1.4426950f
 #define FABS(x) fabsf(x)
-#else ifdef KSDOUBLE
+#else
 #define KSREAL double
 #define SIN(x) sin(x)
 #define COS(x) cos(x)
