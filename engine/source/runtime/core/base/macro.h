@@ -29,5 +29,3 @@
 #define ASSERT(statement) assert(statement)
 #endif
 
-
-

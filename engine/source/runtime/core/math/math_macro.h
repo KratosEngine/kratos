@@ -2,6 +2,7 @@
 
 #include <cmath>
 #include "runtime/core/base/platform.h"
+#include "runtime/core/memory/system.h"
 
 namespace Kratos
 {

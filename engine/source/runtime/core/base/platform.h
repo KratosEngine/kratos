@@ -48,16 +48,24 @@
 #define KS_ENDIAN KS_LITTLE_ENDIAN
 #endif
 
+#include <stdio.h>
+#include <string.h>
 #if KS_PLATFORM == KS_PLATFORM_WIN
 #include <Windows.h>
 #include <tchar.h>
-#pragma warning(disable:4251) //去除模板导出编译的警告
-#pragma warning(disable:4595) 
+#pragma warning(disable : 4251) // 去除模板导出编译的警告
+#pragma warning(disable : 4595)
+#define KS_TCHAR TCHAR
+#else
+#define KS_TCHAR char
 #endif // KS_PLATFORM_WIN
 
-#include <string.h>
-inline void KSMemset(void *pDest, int iC, size_t uiCount)
-{
-    memset(pDest, iC, uiCount);
-}
-
+#ifndef _MSC_VER
+   #ifdef __cplusplus
+   #define ks_inline inline
+   #else
+   #define ks_inline
+   #endif
+#else
+   #define ks_inline __forceinline
+#endif
