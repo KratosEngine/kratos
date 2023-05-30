@@ -40,10 +40,10 @@ namespace Kratos
 	inline int KSRand() { return rand(); }
 	inline void KSRandInit(int Seed) { srand(Seed); }
 	inline KSREAL KSFRand() { return KSRand() / (KSREAL)RAND_MAX; }
-	inline unsigned int Rounding(KSREAL fNum)
-	{
-		return unsigned int(fNum + 0.5f);
-	}
+	// inline unsigned int Rounding(KSREAL fNum)
+	// {
+	// 	return unsigned int(fNum + 0.5f);
+	// }
 
 	/** Return true if value is finite (not NaN and not Infinity). */
 	inline bool IsFinite(KSREAL A)

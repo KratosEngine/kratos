@@ -24,8 +24,8 @@
 #define PolitNameOf(name) #name
 
 #ifdef NDEBUG
-#define ASSERT(statement)
+#define KSMAC_ASSERT(statement)
 #else
-#define ASSERT(statement) assert(statement)
+#define KSMAC_ASSERT(statement) assert(statement)
 #endif
 

@@ -1,7 +1,8 @@
+#pragma once
 
-#include "runtime/core/memory/system.h"
+#include "runtime/core/system/system.h"
 
-#include <new.h>
+// #include <new.h>
 #define KS_NEW new
 #define KS_DELETE delete
 #include <type_traits>
@@ -151,5 +152,17 @@ namespace Kratos
     {
         return (T)((size_t)Ptr + Alignment - (Ptr & (Alignment - 1)));
     }
+
+    class MemoryManager
+    {
+    public:
+        MemoryManager();
+        virtual ~MemoryManager() = 0;
+        virtual void *Allocate(size_t uiSize, size_t uiAlignment, bool bIsArray) = 0;
+        virtual void Deallocate(char *pcAddr, size_t uiAlignment, bool bIsArray) = 0;
+
+    protected:
+        // static VSCriticalSection ms_MemLock;
+    };
 
 }

@@ -48,24 +48,36 @@
 #define KS_ENDIAN KS_LITTLE_ENDIAN
 #endif
 
-#include <stdio.h>
-#include <string.h>
 #if KS_PLATFORM == KS_PLATFORM_WIN
-#include <Windows.h>
+#include <stdio.h>
 #include <tchar.h>
+#include <memory.h>
+#include <assert.h>
+#include <sys/stat.h>
+#include <atlsimpstr.h>
+#include <intrin.h>
+#include <string.h>
 #pragma warning(disable : 4251) // 去除模板导出编译的警告
 #pragma warning(disable : 4595)
 #define KS_TCHAR TCHAR
+#define KS_DWORD DWORD
 #else
+#include <stdio.h>
+#include <string.h>
+#include <thread>
+#include <mutex>
+// #include <cstring>
 #define KS_TCHAR char
+#define KS_DWORD unsigned int
 #endif // KS_PLATFORM_WIN
 
 #ifndef _MSC_VER
-   #ifdef __cplusplus
-   #define ks_inline inline
-   #else
-   #define ks_inline
-   #endif
+#ifdef __cplusplus
+#define ks_inline inline
 #else
-   #define ks_inline __forceinline
+#define ks_inline
 #endif
+#else
+#define ks_inline __forceinline
+#endif
+
