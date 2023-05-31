@@ -1,6 +1,7 @@
 #pragma once
 
-#include "runtime/core/system/system.h"
+#include "runtime/core/base/macro.h"
+#include "runtime/core/system/synchronize.h"
 
 // #include <new.h>
 #define KS_NEW new
@@ -143,14 +144,14 @@ namespace Kratos
     };
 
     template <class T>
-    inline T Align(const T Ptr, size_t Alignment)
+    inline T Align(const T Ptr, ks_usize_t Alignment)
     {
-        return (T)(((size_t)Ptr + Alignment - 1) & ~(Alignment - 1));
+        return (T)(((ks_usize_t)Ptr + Alignment - 1) & ~(Alignment - 1));
     }
     template <class T>
-    inline T Align1(const T Ptr, size_t Alignment)
+    inline T Align1(const T Ptr, ks_usize_t Alignment)
     {
-        return (T)((size_t)Ptr + Alignment - (Ptr & (Alignment - 1)));
+        return (T)((ks_usize_t)Ptr + Alignment - (Ptr & (Alignment - 1)));
     }
 
     class MemoryManager
@@ -158,11 +159,11 @@ namespace Kratos
     public:
         MemoryManager();
         virtual ~MemoryManager() = 0;
-        virtual void *Allocate(size_t uiSize, size_t uiAlignment, bool bIsArray) = 0;
-        virtual void Deallocate(char *pcAddr, size_t uiAlignment, bool bIsArray) = 0;
+        virtual void *Allocate(ks_usize_t uiSize, ks_usize_t uiAlignment, bool bIsArray) = 0;
+        virtual void Deallocate(char *pcAddr, ks_usize_t uiAlignment, bool bIsArray) = 0;
 
     protected:
-        // static VSCriticalSection ms_MemLock;
+        static KSCriticalSection ms_MemLock;
     };
 
 }

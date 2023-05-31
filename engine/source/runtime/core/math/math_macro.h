@@ -1,8 +1,6 @@
 #pragma once
 
 #include <cmath>
-#include "runtime/core/base/platform.h"
-#include "runtime/core/system/system.h"
 
 namespace Kratos
 {

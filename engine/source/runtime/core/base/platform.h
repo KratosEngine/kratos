@@ -54,9 +54,10 @@
 #include <memory.h>
 #include <assert.h>
 #include <sys/stat.h>
-#include <atlsimpstr.h>
+// #include <atlsimpstr.h>
 #include <intrin.h>
 #include <string.h>
+#include <windows.h>
 #pragma warning(disable : 4251) // 去除模板导出编译的警告
 #pragma warning(disable : 4595)
 #define KS_TCHAR TCHAR
@@ -81,3 +82,29 @@
 #define ks_inline __forceinline
 #endif
 
+#ifdef KS_ARCHITECTURE == KS_ARCHITECTURE_64
+#define ks_ssize_t signed long long
+#define ks_usize_t unsigned long long
+#else
+#define ks_ssize_t signed int
+#define ks_usize_t unsigned int
+#endif
+
+namespace Kratos
+{
+    inline void KSMemset(void *pDest, int iC, ks_usize_t uiCount)
+    {
+        memset(pDest, iC, uiCount);
+    }
+
+    inline void KSStrCopy(KS_TCHAR *pDest, unsigned int uiCount, const KS_TCHAR *pSource)
+    {
+#if KS_PLATFORM == KS_PLATFORM_WIN
+        _tcscpy_s(pDest, uiCount, pSource);
+#else
+        strncpy(pDest, pSource, uiCount);
+        return;
+#endif
+    }
+
+}

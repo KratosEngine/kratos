@@ -1,6 +1,6 @@
 #pragma once
 
-#include "runtime/core/system/system.h"
+#include "runtime/core/base/macro.h"
 
 namespace Kratos
 {

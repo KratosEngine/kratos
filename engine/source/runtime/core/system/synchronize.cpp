@@ -1,6 +1,5 @@
 
 #include "runtime/core/system/synchronize.h"
-#include "runtime/core/base/macro.h"
 
 using namespace Kratos;
 
@@ -68,7 +67,7 @@ KSSemaphore::~KSSemaphore()
 void KSSemaphore::Enter()
 {
 #if KS_PLATFORM == KS_PLATFORM_WIN
-    DWORD result = WaitForSingleObject((HANDLE)m_Semaphore, INFINITE);
+    KS_DWORD result = WaitForSingleObject((HANDLE)m_Semaphore, INFINITE);
     KSMAC_ASSERT(result);
 #else
     LOG_WARN("no thread implement");
@@ -114,7 +113,7 @@ KSMutex::~KSMutex()
 void KSMutex::Enter()
 {
 #if KS_PLATFORM == KS_PLATFORM_WIN
-    DWORD result = WaitForSingleObject((HANDLE)m_Mutex, INFINITE);
+    KS_DWORD result = WaitForSingleObject((HANDLE)m_Mutex, INFINITE);
     KSMAC_ASSERT(result != WAIT_FAILED);
 #else
     LOG_WARN("no thread implement");
@@ -243,7 +242,7 @@ void KSEvent::Pulse(void)
 * Waits for the event to be triggered
 *
 * @param WaitTime Time in milliseconds to wait before abandoning the event
-* (DWORD)-1 is treated as wait infinite
+* (KS_DWORD)-1 is treated as wait infinite
 *
 * @return TRUE if the event was signaled, FALSE if the wait timed out
 */

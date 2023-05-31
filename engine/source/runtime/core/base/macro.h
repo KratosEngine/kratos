@@ -2,6 +2,7 @@
 
 #include "runtime/core/log/log_system.h"
 #include "runtime/function/global/global_context.h"
+#include "runtime/core/base/platform.h"
 
 #include <chrono>
 #include <thread>

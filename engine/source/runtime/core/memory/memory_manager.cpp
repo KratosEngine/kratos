@@ -7,5 +7,4 @@ MemoryManager::MemoryManager()
 MemoryManager::~MemoryManager()
 {
 }
-
-
+KSCriticalSection MemoryManager::ms_MemLock;
