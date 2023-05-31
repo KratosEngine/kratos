@@ -36,7 +36,7 @@
 #define KS_ARCHITECTURE_64 2
 
 /* Find the arch type */
-#if defined(__x86_64__) || defined(_M_X64) || defined(__powerpc64__) || defined(__alpha__) || defined(__ia64__) || defined(__s390__) || defined(__s390x__)
+#if defined(__x86_64__) || defined(_M_X64) || defined(__powerpc64__) || defined(__alpha__) || defined(__ia64__) || defined(__s390__) || defined(__s390x__) || defined(__arch64__) || defined(_LP64)
 #define KS_ARCHITECTURE KS_ARCHITECTURE_64
 #else
 #define KS_ARCHITECTURE KS_ARCHITECTURE_32
@@ -51,6 +51,14 @@
 #else
 #define KS_ENDIAN KS_LITTLE_ENDIAN
 #endif
+
+/*
+ * Types that are (so far) the same on all platforms
+ */
+typedef signed   char          ks_int8_t;
+typedef unsigned char          ks_uint8_t;
+typedef signed   short int     ks_int16_t;
+typedef unsigned short int     ks_uint16_t;
 
 #if KS_PLATFORM == KS_PLATFORM_WIN
 #include <stdio.h>
@@ -86,7 +94,7 @@
 #define ks_inline __forceinline
 #endif
 
-#ifdef KS_ARCHITECTURE == KS_ARCHITECTURE_64
+#if KS_ARCHITECTURE == KS_ARCHITECTURE_64
 #define ks_ssize_t signed long long
 #define ks_usize_t unsigned long long
 #else
@@ -114,37 +122,37 @@ namespace Kratos
 
     inline unsigned int KSTlsAlloc()
     {
-#ifdef KS_PLATFORM == KS_PLATFORM_WIN
+#if KS_PLATFORM == KS_PLATFORM_WIN
         return TlsAlloc();
 #else
-        LOG_WARN("No Implement!");
+        // LOG_WARN("No Implement!");
         return 0;
 #endif
     }
     inline void *KSGetTlsValue(unsigned int TlsSolt)
     {
-#ifdef KS_PLATFORM == KS_PLATFORM_WIN
+#if KS_PLATFORM == KS_PLATFORM_WIN
         return TlsGetValue(TlsSolt);
 #else
-        LOG_WARN("No Implement!");
+        // LOG_WARN("No Implement!");
         return NULL;
 #endif
     }
     inline bool KSSetTlsValue(unsigned int TlsSolt, void *TlsValue)
     {
-#ifdef KS_PLATFORM == KS_PLATFORM_WIN
+#if KS_PLATFORM == KS_PLATFORM_WIN
         return TlsSetValue(TlsSolt, TlsValue);
 #else
-        LOG_WARN("No Implement!");
+        // LOG_WARN("No Implement!");
         return false;
 #endif
     }
     inline bool KSTlsFree(unsigned int TlsSolt)
     {
-#ifdef KS_PLATFORM == KS_PLATFORM_WIN
+#if KS_PLATFORM == KS_PLATFORM_WIN
         return TlsFree(TlsSolt);
 #else
-        LOG_WARN("No Implement!");
+        // LOG_WARN("No Implement!");
         return false;
 #endif
     }

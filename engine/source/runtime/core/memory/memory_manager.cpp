@@ -26,10 +26,14 @@ void *KSCMem::Allocate(ks_usize_t uiSize, ks_usize_t uiAlignment, bool bIsArray)
     }
     else
     {
+#if KS_PLATFORM == KS_PLATFORM_WIN
         return _aligned_malloc(uiSize, uiAlignment);
+#else
+        return aligned_alloc(uiSize, uiAlignment);
+#endif
     }
-    return NULL;
 }
+
 void KSCMem::Deallocate(char *pcAddr, ks_usize_t uiAlignment, bool bIsArray)
 {
     KSCriticalSection::Locker Temp(ms_MemLock);
@@ -39,7 +43,11 @@ void KSCMem::Deallocate(char *pcAddr, ks_usize_t uiAlignment, bool bIsArray)
     }
     else
     {
+#if KS_PLATFORM == KS_PLATFORM_WIN
         _aligned_free(pcAddr);
+#else
+        free(pcAddr);
+#endif
     }
 }
 
@@ -106,7 +114,7 @@ KSStackMem::~KSStackMem()
     KSMAC_ASSERT(NumMarks == 0);
 }
 
-BYTE *KSStackMem::AllocateNewChunk(ks_usize_t MinSize)
+ks_uint8_t *KSStackMem::AllocateNewChunk(ks_usize_t MinSize)
 {
     FTaggedMemory *Chunk = NULL;
     for (FTaggedMemory **Link = &UnusedChunks; *Link; Link = &(*Link)->Next)
@@ -166,10 +174,10 @@ void *KSStackMem::Allocate(ks_usize_t uiSize, ks_usize_t uiAlignment, bool bIsAr
     KSMAC_ASSERT(NumMarks > 0);
 
     // Try to get memory from the current chunk.
-    BYTE *Result = Top;
+    ks_uint8_t *Result = Top;
     if (uiAlignment > 0)
     {
-        Result = (BYTE *)(((ks_usize_t)Top + (uiAlignment - 1)) & ~(uiAlignment - 1));
+        Result = (ks_uint8_t *)(((ks_usize_t)Top + (uiAlignment - 1)) & ~(uiAlignment - 1));
     }
     Top = Result + uiSize;
 
@@ -181,7 +189,7 @@ void *KSStackMem::Allocate(ks_usize_t uiSize, ks_usize_t uiAlignment, bool bIsAr
         Result = Top;
         if (uiAlignment > 0)
         {
-            Result = (BYTE *)(((ks_usize_t)Top + (uiAlignment - 1)) & ~(uiAlignment - 1));
+            Result = (ks_uint8_t *)(((ks_usize_t)Top + (uiAlignment - 1)) & ~(uiAlignment - 1));
         }
         Top = Result + uiSize;
     }
@@ -202,7 +210,6 @@ KSMemObject::KSMemObject()
 
 KSMemObject::~KSMemObject()
 {
-    
 }
 
 KSMemManager &KSMemObject::GetMemManager()
@@ -228,4 +235,3 @@ KSStackMem &KSMemObject::GetStackMemManager()
     static KSStackMem g_StackMemManager;
     return g_StackMemManager;
 }
-

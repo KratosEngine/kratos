@@ -208,12 +208,12 @@ namespace Kratos
         {
             FTaggedMemory *Next;
             ks_usize_t DataSize;
-            BYTE Data[1];
+            ks_uint8_t Data[1];
         };
 
         // Variables.
-        BYTE *Top;                   // Top of current chunk (Top<=End).
-        BYTE *End;                   // End of current chunk.
+        ks_uint8_t *Top;                   // Top of current chunk (Top<=End).
+        ks_uint8_t *End;                   // End of current chunk.
         ks_usize_t DefaultChunkSize; // Maximum chunk size to allocate.
         FTaggedMemory *TopChunk;     // Only chunks 0..ActiveChunks-1 are valid.
 
@@ -221,14 +221,14 @@ namespace Kratos
         FTaggedMemory *UnusedChunks;
 
         /** The number of marks on this stack. */
-        INT NumMarks;
+        size_t NumMarks;
 
         /**
          * Allocate a new chunk of memory of at least MinSize size,
          * and return it aligned to Align. Updates the memory stack's
          * Chunks table and ActiveChunks counter.
          */
-        BYTE *AllocateNewChunk(ks_usize_t MinSize);
+        ks_uint8_t *AllocateNewChunk(ks_usize_t MinSize);
 
         /** Frees the chunks above the specified chunk on the stack. */
         /*移除这个chunk和这个chunk之前的所有chunk*/
@@ -316,7 +316,7 @@ namespace Kratos
         }
 
     private:
-        BYTE *Top;
+        ks_uint8_t *Top;
         KSStackMem::FTaggedMemory *SavedChunk;
         T *m_pPtr;
         ks_usize_t m_uiNum;
@@ -387,16 +387,16 @@ namespace Kratos
         }
 
     private:
-        BYTE *Top;
+        ks_uint8_t *Top;
         KSStackMem::FTaggedMemory *SavedChunk;
     };
 }
 
-inline void *operator new(ks_usize_t uiSize)
+inline void* operator new(size_t uiSize)
 {
     return Kratos::KSMemObject::GetMemManager().Allocate(uiSize, 0, false);
 }
-inline void *operator new[](ks_usize_t uiSize)
+inline void* operator new[](size_t uiSize)
 {
     return Kratos::KSMemObject::GetMemManager().Allocate(uiSize, 0, true);
 }
