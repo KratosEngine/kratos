@@ -33,11 +33,25 @@ target_compile_options(${TARGET_NAME} PUBLIC "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:
 # Link dependencies    
 target_link_libraries(${TARGET_NAME} PUBLIC spdlog::spdlog)
 target_link_libraries(${TARGET_NAME} PUBLIC glfw)
+target_link_libraries(${TARGET_NAME} PUBLIC imgui)
+target_link_libraries(${TARGET_NAME} PUBLIC ${vulkan_lib})
+target_link_libraries(${TARGET_NAME} PRIVATE $<BUILD_INTERFACE:json11>)
 
 target_include_directories(
   ${TARGET_NAME} 
   PUBLIC $<BUILD_INTERFACE:${ENGINE_ROOT_DIR}/source>
   $<INSTALL_INTERFACE:include/${TARGET_NAME}-${PROJECT_VERSION}>
+)
+
+
+target_include_directories(
+  ${TARGET_NAME} 
+  PUBLIC $<BUILD_INTERFACE:${JSON_INCLUDE}>
+)
+
+target_include_directories(
+  ${TARGET_NAME} 
+  PUBLIC $<BUILD_INTERFACE:${THIRD_PARTY_DIR}/vulkanmemoryallocator/include>
 )
 
 target_include_directories(
