@@ -28,3 +28,8 @@ if(NOT TARGET spdlog)
     add_subdirectory(spdlog)
     set_target_properties(spdlog PROPERTIES FOLDER ${third_party_folder}/spdlog)
 endif()
+
+if(NOT TARGET stb)
+    include(stb.cmake)
+    set_target_properties(stb PROPERTIES FOLDER ${third_party_folder}/stb)
+endif()
