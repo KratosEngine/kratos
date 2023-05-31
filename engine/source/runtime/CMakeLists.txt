@@ -3,6 +3,9 @@ set(TARGET_NAME KratosRuntime)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(JSON_INCLUDE ${THIRD_PARTY_DIR}/json11)
+add_library(json11 ${JSON_INCLUDE}/json11.cpp)
+set_target_properties(json11 PROPERTIES FOLDER "ThirdParty/json11")
 # ---- Add source files ----
 
 # Note: globbing sources is considered bad practice as CMake's generators may not detect new files
