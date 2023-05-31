@@ -30,7 +30,7 @@ unsigned int KSSynchronize::WaitAll(KSSynchronize **pSynchronize, unsigned int u
 
 void KSSynchronize::SafeOutputDebugString(const KS_TCHAR *pcString, ...)
 {
-    // VSCriticalSection::Locker Temp(g_SafeOutputString);
+    // KSCriticalSection::Locker Temp(g_SafeOutputString);
 #if KS_PLATFORM == KS_PLATFORM_WIN
     char *pArgs;
     pArgs = (char *)&pcString + sizeof(pcString);
@@ -127,7 +127,7 @@ void KSMutex::Enter()
 //----------------------------------------------------------------------------
 void KSMutex::Leave()
 {
-#ifdef WINDOWS_PLATFORM
+#if KS_PLATFORM == KS_PLATFORM_WIN
     BOOL released = ReleaseMutex((HANDLE)m_Mutex);
     KSMAC_ASSERT(released);
 #else
@@ -137,124 +137,151 @@ void KSMutex::Leave()
 
 KSEvent::KSEvent(void)
 {
-	Event = NULL;
+    Event = NULL;
 }
 
 /**
-* Cleans up the event handle if valid
-*/
+ * Cleans up the event handle if valid
+ */
 KSEvent::~KSEvent(void)
 {
-	if (Event != NULL)
-	{
+    if (Event != NULL)
+    {
 #if KS_PLATFORM == KS_PLATFORM_WIN
-		CloseHandle(Event);
+        CloseHandle(Event);
 #else
-		LOG_WARN("no thread implement");
+        LOG_WARN("no thread implement");
 #endif
-	}
+    }
 }
 
 /**
-* Waits for the event to be signaled before returning
-*/
+ * Waits for the event to be signaled before returning
+ */
 void KSEvent::Lock(void)
 {
 #if KS_PLATFORM == KS_PLATFORM_WIN
-	WaitForSingleObject(Event,INFINITE);
+    WaitForSingleObject(Event, INFINITE);
 #else
-	LOG_WARN("no thread implement");
+    LOG_WARN("no thread implement");
 #endif
 }
 
 /**
-* Triggers the event so any waiting threads are allowed access
-*/
+ * Triggers the event so any waiting threads are allowed access
+ */
 void KSEvent::Unlock(void)
 {
 #if KS_PLATFORM == KS_PLATFORM_WIN
-	PulseEvent(Event);
+    PulseEvent(Event);
 #else
-	LOG_WARN("no thread implement");
+    LOG_WARN("no thread implement");
 #endif
 }
 
 /**
-* Creates the event. Manually reset events stay triggered until reset.
-* Named events share the same underlying event.
-*
-* @param bIsManualReset Whether the event requires manual reseting or not
-* @param InName Whether to use a commonly shared event or not. If so this
-* is the name of the event to share.
-*
-* @return Returns TRUE if the event was created, FALSE otherwise
-*/
-bool KSEvent::Create(bool bIsManualReset,const KS_TCHAR* InName)
+ * Creates the event. Manually reset events stay triggered until reset.
+ * Named events share the same underlying event.
+ *
+ * @param bIsManualReset Whether the event requires manual reseting or not
+ * @param InName Whether to use a commonly shared event or not. If so this
+ * is the name of the event to share.
+ *
+ * @return Returns TRUE if the event was created, FALSE otherwise
+ */
+bool KSEvent::Create(bool bIsManualReset, const KS_TCHAR *InName)
 {
-	// Create the event and default it to non-signaled
+    // Create the event and default it to non-signaled
 #if KS_PLATFORM == KS_PLATFORM_WIN
-	Event = CreateEvent(NULL,bIsManualReset,0,InName);
-	return Event != NULL;
+    Event = CreateEvent(NULL, bIsManualReset, 0, InName);
+    return Event != NULL;
 #else
-	LOG_WARN("no thread implement");
+    LOG_WARN("no thread implement");
 #endif
 }
 
 /**
-* Triggers the event so any waiting threads are activated
-*/
+ * Triggers the event so any waiting threads are activated
+ */
 void KSEvent::Trigger(void)
 {
 #if KS_PLATFORM == KS_PLATFORM_WIN
-	SetEvent(Event);
+    SetEvent(Event);
 #else
-	LOG_WARN("no thread implement");
+    LOG_WARN("no thread implement");
 #endif
 }
 
 /**
-* Resets the event to an untriggered (waitable) state
-*/
+ * Resets the event to an untriggered (waitable) state
+ */
 void KSEvent::Reset(void)
 {
 #if KS_PLATFORM == KS_PLATFORM_WIN
-	ResetEvent(Event);
+    ResetEvent(Event);
 #else
-	LOG_WARN("no thread implement");
+    LOG_WARN("no thread implement");
 #endif
 }
 
 /**
-* Triggers the event and resets the triggered state NOTE: This behaves
-* differently for auto-reset versus manual reset events. All threads
-* are released for manual reset events and only one is for auto reset
-*/
+ * Triggers the event and resets the triggered state NOTE: This behaves
+ * differently for auto-reset versus manual reset events. All threads
+ * are released for manual reset events and only one is for auto reset
+ */
 void KSEvent::Pulse(void)
 {
 #if KS_PLATFORM == KS_PLATFORM_WIN
-	PulseEvent(Event);
+    PulseEvent(Event);
 #else
-	LOG_WARN("no thread implement");
+    LOG_WARN("no thread implement");
 #endif
 }
 
 /**
-* Waits for the event to be triggered
-*
-* @param WaitTime Time in milliseconds to wait before abandoning the event
-* (KS_DWORD)-1 is treated as wait infinite
-*
-* @return TRUE if the event was signaled, FALSE if the wait timed out
-*/
+ * Waits for the event to be triggered
+ *
+ * @param WaitTime Time in milliseconds to wait before abandoning the event
+ * (KS_DWORD)-1 is treated as wait infinite
+ *
+ * @return TRUE if the event was signaled, FALSE if the wait timed out
+ */
 bool KSEvent::Wait(KS_DWORD WaitTime)
 {
 #if KS_PLATFORM == KS_PLATFORM_WIN
-	return WaitForSingleObject(Event,WaitTime) == WAIT_OBJECT_0;
+    return WaitForSingleObject(Event, WaitTime) == WAIT_OBJECT_0;
 #else
-	LOG_WARN("no thread implement");
+    LOG_WARN("no thread implement");
 #endif
 }
 bool KSEvent::IsTrigger()
 {
-	return Wait(0);
+    return Wait(0);
 }
+
+// KSTlsValue::KSTlsValue()
+// {
+//     KSCriticalSection::Locker Temp(m_CriticalSection);
+//     m_uiSlot = KSTlsAlloc();
+//     KSMAC_ASSERT(m_uiSlot != 0XFFFFFFFF);
+// }
+// KSTlsValue::~KSTlsValue()
+// {
+//     KSMAC_ASSERT(m_uiSlot != 0XFFFFFFFF);
+//     for (unsigned int i = 0; i < m_uiThreadValueNum; i++)
+//     {
+//         KSDelete(m_pThreadValue[i]);
+//     }
+//     KSTlsFree(m_uiSlot);
+// }
+// void KSTlsValue::SetThreadValue(void *pValue)
+// {
+//     KSCriticalSection::Locker Temp(m_CriticalSection);
+//     m_pThreadValue[m_uiThreadValueNum] = (KSStackMem *)pValue;
+//     m_uiThreadValueNum++;
+//     KSSetTlsValue(m_uiSlot, pValue);
+// }
+// void *KSTlsValue::GetThreadValue()
+// {
+//     return KSGetTlsValue(m_uiSlot);
+// }

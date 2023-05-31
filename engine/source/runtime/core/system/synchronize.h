@@ -1,6 +1,7 @@
 #pragma once
 
 #include "runtime/core/base/macro.h"
+// #include "runtime/core/memory/memory_manager.h"
 
 namespace Kratos
 {
@@ -225,5 +226,24 @@ namespace Kratos
 
         virtual bool IsTrigger();
     };
+
+    // class KSTlsValue
+    // {
+    // public:
+    //     KSTlsValue();
+    //     ~KSTlsValue();
+    //     enum
+    //     {
+    //         MAX_THREAD_VALUE = 256,
+    //     };
+    //     void SetThreadValue(void *pValue);
+    //     void *GetThreadValue();
+
+    // protected:
+    //     unsigned int m_uiSlot = 0XFFFFFFFF;
+    //     class KSStackMem *m_pThreadValue[MAX_THREAD_VALUE];
+    //     unsigned int m_uiThreadValueNum = 0;
+    //     KSCriticalSection m_CriticalSection;
+    // };
 
 }

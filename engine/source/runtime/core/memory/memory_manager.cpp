@@ -1,10 +1,231 @@
 #include "runtime/core/memory/memory_manager.h"
 
 using namespace Kratos;
-MemoryManager::MemoryManager()
+KSMemManager::KSMemManager()
 {
 }
-MemoryManager::~MemoryManager()
+KSMemManager::~KSMemManager()
 {
 }
-KSCriticalSection MemoryManager::ms_MemLock;
+KSCriticalSection KSMemManager::ms_MemLock;
+
+// ===========================================KSCMem===========================================
+KSCMem::KSCMem()
+{
+}
+KSCMem::~KSCMem()
+{
+}
+void *KSCMem::Allocate(ks_usize_t uiSize, ks_usize_t uiAlignment, bool bIsArray)
+{
+    KSCriticalSection::Locker Temp(ms_MemLock);
+    // 不需要字节对齐的使用默认malloc分配内存，否则使用_aligned_malloc(c17默认支持，c11、c14需要自己实现)
+    if (uiAlignment == 0)
+    {
+        return malloc(uiSize);
+    }
+    else
+    {
+        return _aligned_malloc(uiSize, uiAlignment);
+    }
+    return NULL;
+}
+void KSCMem::Deallocate(char *pcAddr, ks_usize_t uiAlignment, bool bIsArray)
+{
+    KSCriticalSection::Locker Temp(ms_MemLock);
+    if (uiAlignment == 0)
+    {
+        free(pcAddr);
+    }
+    else
+    {
+        _aligned_free(pcAddr);
+    }
+}
+
+// ===========================================KSMemTBB===========================================
+
+// #include <scalable_allocator.h>
+KSMemTBB::KSMemTBB()
+{
+}
+KSMemTBB::~KSMemTBB()
+{
+}
+
+void *KSMemTBB::Allocate(ks_usize_t uiSize, ks_usize_t uiAlignment, bool bIsArray)
+{
+    return malloc(uiSize);
+    // if (uiAlignment != 0)
+    // {
+    //     // uiAlignment = Max(uiSize >= 16 ? (ks_usize_t)16 : (ks_usize_t)8, uiAlignment);
+    //     return scalable_aligned_malloc(uiSize, uiAlignment);
+    // }
+    // else
+    // {
+    //     return scalable_malloc(uiSize);
+    // }
+}
+void KSMemTBB::Deallocate(char *pcAddr, ks_usize_t uiAlignment, bool bIsArray)
+{
+    free(pcAddr);
+    // if (!pcAddr)
+    // {
+    //     return;
+    // }
+    // if (uiAlignment != 0)
+    // {
+    //     scalable_aligned_free(pcAddr);
+    // }
+    // else
+    // {
+    //     scalable_free(pcAddr);
+    // }
+}
+
+// ===========================================KSCMem===========================================
+KSStackMem::KSStackMem(ks_usize_t uiDefaultChunkSize)
+{
+    KSMAC_ASSERT(uiDefaultChunkSize > sizeof(FTaggedMemory));
+    Top = NULL;
+    End = NULL;
+    DefaultChunkSize = uiDefaultChunkSize;
+    TopChunk = NULL;
+    UnusedChunks = NULL;
+    NumMarks = 0;
+}
+KSStackMem::~KSStackMem()
+{
+    FreeChunks(NULL);
+    while (UnusedChunks)
+    {
+        void *Old = UnusedChunks;
+        UnusedChunks = UnusedChunks->Next;
+        KSMemObject::GetMemManager().Deallocate((char *)Old, 0, true);
+    }
+    KSMAC_ASSERT(NumMarks == 0);
+}
+
+BYTE *KSStackMem::AllocateNewChunk(ks_usize_t MinSize)
+{
+    FTaggedMemory *Chunk = NULL;
+    for (FTaggedMemory **Link = &UnusedChunks; *Link; Link = &(*Link)->Next)
+    {
+        // Find existing chunk.
+        if ((*Link)->DataSize >= MinSize)
+        {
+            Chunk = *Link;
+            *Link = (*Link)->Next;
+            break;
+        }
+    }
+    if (!Chunk)
+    {
+        // Create new chunk.
+        ks_usize_t DataSize = Max(MinSize, DefaultChunkSize - sizeof(FTaggedMemory));
+        Chunk = (FTaggedMemory *)KSMemObject::GetMemManager().Allocate(DataSize + sizeof(FTaggedMemory), 0, true);
+        Chunk->DataSize = DataSize;
+    }
+
+    Chunk->Next = TopChunk;
+    TopChunk = Chunk;
+    Top = Chunk->Data;
+    End = Top + Chunk->DataSize;
+    return Top;
+}
+
+void KSStackMem::FreeChunks(FTaggedMemory *NewTopChunk)
+{
+    while (TopChunk != NewTopChunk)
+    {
+        FTaggedMemory *RemoveChunk = TopChunk;
+        TopChunk = TopChunk->Next;
+        RemoveChunk->Next = UnusedChunks;
+        UnusedChunks = RemoveChunk;
+    }
+    Top = NULL;
+    End = NULL;
+    if (TopChunk)
+    {
+        Top = TopChunk->Data;
+        End = Top + TopChunk->DataSize;
+    }
+}
+
+void *KSStackMem::Allocate(ks_usize_t uiSize, ks_usize_t uiAlignment, bool bIsArray)
+{
+    // Debug checks.
+    KSMAC_ASSERT(uiSize >= 0);
+#ifdef _DEBUG
+    if (uiAlignment > 0)
+    {
+        KSMAC_ASSERT((uiAlignment & (uiAlignment - 1)) == 0);
+    }
+#endif
+    KSMAC_ASSERT(Top <= End);
+    KSMAC_ASSERT(NumMarks > 0);
+
+    // Try to get memory from the current chunk.
+    BYTE *Result = Top;
+    if (uiAlignment > 0)
+    {
+        Result = (BYTE *)(((ks_usize_t)Top + (uiAlignment - 1)) & ~(uiAlignment - 1));
+    }
+    Top = Result + uiSize;
+
+    // Make sure we didn't overflow.
+    if (Top > End)
+    {
+        // We'd pass the end of the current chunk, so allocate a new one.
+        AllocateNewChunk(uiSize + uiAlignment);
+        Result = Top;
+        if (uiAlignment > 0)
+        {
+            Result = (BYTE *)(((ks_usize_t)Top + (uiAlignment - 1)) & ~(uiAlignment - 1));
+        }
+        Top = Result + uiSize;
+    }
+    return Result;
+}
+void KSStackMem::Clear()
+{
+    FreeChunks(NULL);
+}
+
+// ===========================================KSMemManager===========================================
+KSMemObject::KSMemObject()
+{
+    GetCMemManager();
+    GetMemManager();
+    GetStackMemManager();
+}
+
+KSMemObject::~KSMemObject()
+{
+    
+}
+
+KSMemManager &KSMemObject::GetMemManager()
+{
+    static KSMemTBB g_MemManager;
+    return g_MemManager;
+}
+KSMemManager &KSMemObject::GetCMemManager()
+{
+    static KSCMem g_MemManager;
+    return g_MemManager;
+}
+KSStackMem &KSMemObject::GetStackMemManager()
+{
+    // static KSTlsValue g_TlsValue;
+    // void *pTlsValue = g_TlsValue.GetThreadValue();
+    // if (!pTlsValue)
+    // {
+    //     pTlsValue = KS_NEW KSStackMem();
+    //     g_TlsValue.SetThreadValue(pTlsValue);
+    // }
+    // return *((KSStackMem *)pTlsValue);
+    static KSStackMem g_StackMemManager;
+    return g_StackMemManager;
+}
+

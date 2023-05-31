@@ -1,5 +1,9 @@
 #pragma once
 
+#ifndef _DEBUG
+#define _DEBUG 0
+#endif
+
 #define KS_PLATFORM_WIN 1
 #define KS_PLATFORM_LINUX 2
 #define KS_PLATFORM_OSX 3
@@ -90,6 +94,7 @@
 #define ks_usize_t unsigned int
 #endif
 
+#include "runtime/core/base/macro.h"
 namespace Kratos
 {
     inline void KSMemset(void *pDest, int iC, ks_usize_t uiCount)
@@ -107,4 +112,77 @@ namespace Kratos
 #endif
     }
 
+    inline unsigned int KSTlsAlloc()
+    {
+#ifdef KS_PLATFORM == KS_PLATFORM_WIN
+        return TlsAlloc();
+#else
+        LOG_WARN("No Implement!");
+        return 0;
+#endif
+    }
+    inline void *KSGetTlsValue(unsigned int TlsSolt)
+    {
+#ifdef KS_PLATFORM == KS_PLATFORM_WIN
+        return TlsGetValue(TlsSolt);
+#else
+        LOG_WARN("No Implement!");
+        return NULL;
+#endif
+    }
+    inline bool KSSetTlsValue(unsigned int TlsSolt, void *TlsValue)
+    {
+#ifdef KS_PLATFORM == KS_PLATFORM_WIN
+        return TlsSetValue(TlsSolt, TlsValue);
+#else
+        LOG_WARN("No Implement!");
+        return false;
+#endif
+    }
+    inline bool KSTlsFree(unsigned int TlsSolt)
+    {
+#ifdef KS_PLATFORM == KS_PLATFORM_WIN
+        return TlsFree(TlsSolt);
+#else
+        LOG_WARN("No Implement!");
+        return false;
+#endif
+    }
+
+    template <typename T>
+    inline T ABS(T t)
+    {
+        return t < 0 ? -t : t;
+    }
+    template <typename T>
+    inline T Min(T t0, T t1)
+    {
+        return t0 < t1 ? t0 : t1;
+    }
+    template <typename T>
+    inline T Max(T t0, T t1)
+    {
+        return t0 > t1 ? t0 : t1;
+    }
+    template <typename T>
+    inline T Clamp(T Value, T Max, T Min)
+    {
+        if (Value >= Max)
+        {
+            return Max;
+        }
+        if (Value <= Min)
+        {
+            return Min;
+        }
+        return Value;
+    }
+    template <class T>
+    inline void Swap(T &t1, T &t2)
+    {
+        T temp;
+        temp = t1;
+        t1 = t2;
+        t2 = temp;
+    }
 }
