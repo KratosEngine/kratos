@@ -120,6 +120,15 @@ namespace Kratos
 #endif
     }
 
+    inline unsigned int KSStrLen(const KS_TCHAR *pStr)
+    {
+#if KS_PLATFORM == KS_PLATFORM_WIN
+        return (unsigned int)_tcslen(pStr);
+#else
+        return 0;
+#endif
+    }
+
     inline unsigned int KSTlsAlloc()
     {
 #if KS_PLATFORM == KS_PLATFORM_WIN
@@ -135,7 +144,7 @@ namespace Kratos
         return TlsGetValue(TlsSolt);
 #else
         // LOG_WARN("No Implement!");
-        return NULL;
+        return nullptr;
 #endif
     }
     inline bool KSSetTlsValue(unsigned int TlsSolt, void *TlsValue)

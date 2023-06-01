@@ -95,16 +95,16 @@ void KSMemTBB::Deallocate(char *pcAddr, ks_usize_t uiAlignment, bool bIsArray)
 KSStackMem::KSStackMem(ks_usize_t uiDefaultChunkSize)
 {
     KSMAC_ASSERT(uiDefaultChunkSize > sizeof(FTaggedMemory));
-    Top = NULL;
-    End = NULL;
+    Top = nullptr;
+    End = nullptr;
     DefaultChunkSize = uiDefaultChunkSize;
-    TopChunk = NULL;
-    UnusedChunks = NULL;
+    TopChunk = nullptr;
+    UnusedChunks = nullptr;
     NumMarks = 0;
 }
 KSStackMem::~KSStackMem()
 {
-    FreeChunks(NULL);
+    FreeChunks(nullptr);
     while (UnusedChunks)
     {
         void *Old = UnusedChunks;
@@ -116,7 +116,7 @@ KSStackMem::~KSStackMem()
 
 ks_uint8_t *KSStackMem::AllocateNewChunk(ks_usize_t MinSize)
 {
-    FTaggedMemory *Chunk = NULL;
+    FTaggedMemory *Chunk = nullptr;
     for (FTaggedMemory **Link = &UnusedChunks; *Link; Link = &(*Link)->Next)
     {
         // Find existing chunk.
@@ -151,8 +151,8 @@ void KSStackMem::FreeChunks(FTaggedMemory *NewTopChunk)
         RemoveChunk->Next = UnusedChunks;
         UnusedChunks = RemoveChunk;
     }
-    Top = NULL;
-    End = NULL;
+    Top = nullptr;
+    End = nullptr;
     if (TopChunk)
     {
         Top = TopChunk->Data;
@@ -197,7 +197,7 @@ void *KSStackMem::Allocate(ks_usize_t uiSize, ks_usize_t uiAlignment, bool bIsAr
 }
 void KSStackMem::Clear()
 {
-    FreeChunks(NULL);
+    FreeChunks(nullptr);
 }
 
 // ===========================================KSMemManager===========================================

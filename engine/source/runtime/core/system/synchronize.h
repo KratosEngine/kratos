@@ -195,7 +195,7 @@ namespace Kratos
          *
          * @return Returns TRUE if the event was created, FALSE otherwise
          */
-        virtual bool Create(bool bIsManualReset = false, const KS_TCHAR *InName = NULL);
+        virtual bool Create(bool bIsManualReset = false, const KS_TCHAR *InName = nullptr);
 
         /**
          * Triggers the event so any waiting threads are activated

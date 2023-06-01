@@ -45,7 +45,7 @@ KSSemaphore::KSSemaphore(unsigned int uiCount, unsigned int MaxCount)
 {
     KSMAC_ASSERT(uiCount <= MaxCount);
 #if KS_PLATFORM == KS_PLATFORM_WIN
-    m_Semaphore = CreateSemaphore(NULL, uiCount, MaxCount, NULL);
+    m_Semaphore = CreateSemaphore(nullptr, uiCount, MaxCount, nullptr);
     KSMAC_ASSERT(m_Semaphore);
 #else
     LOG_WARN("no thread implement");
@@ -82,7 +82,7 @@ void KSSemaphore::Enter()
 void KSSemaphore::Leave(unsigned int uiReleaseCount)
 {
 #if KS_PLATFORM == KS_PLATFORM_WIN
-    BOOL released = ReleaseSemaphore((HANDLE)m_Semaphore, uiReleaseCount, NULL);
+    BOOL released = ReleaseSemaphore((HANDLE)m_Semaphore, uiReleaseCount, nullptr);
     KSMAC_ASSERT(released);
 #else
     LOG_WARN("no thread implement");
@@ -92,7 +92,7 @@ void KSSemaphore::Leave(unsigned int uiReleaseCount)
 KSMutex::KSMutex()
 {
 #if KS_PLATFORM == KS_PLATFORM_WIN
-    m_Mutex = CreateMutex(NULL, FALSE, NULL);
+    m_Mutex = CreateMutex(nullptr, FALSE, nullptr);
 #else
     LOG_WARN("no thread implement");
 #endif
@@ -107,7 +107,7 @@ KSMutex::~KSMutex()
 #else
     LOG_WARN("no thread implement");
 #endif
-    m_Mutex = NULL;
+    m_Mutex = nullptr;
 }
 //----------------------------------------------------------------------------
 void KSMutex::Enter()
@@ -137,7 +137,7 @@ void KSMutex::Leave()
 
 KSEvent::KSEvent(void)
 {
-    Event = NULL;
+    Event = nullptr;
 }
 
 /**
@@ -145,7 +145,7 @@ KSEvent::KSEvent(void)
  */
 KSEvent::~KSEvent(void)
 {
-    if (Event != NULL)
+    if (Event != nullptr)
     {
 #if KS_PLATFORM == KS_PLATFORM_WIN
         CloseHandle(Event);
@@ -193,8 +193,8 @@ bool KSEvent::Create(bool bIsManualReset, const KS_TCHAR *InName)
 {
     // Create the event and default it to non-signaled
 #if KS_PLATFORM == KS_PLATFORM_WIN
-    Event = CreateEvent(NULL, bIsManualReset, 0, InName);
-    return Event != NULL;
+    Event = CreateEvent(nullptr, bIsManualReset, 0, InName);
+    return Event != nullptr;
 #else
     LOG_WARN("no thread implement");
 #endif

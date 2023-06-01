@@ -302,7 +302,7 @@ namespace Kratos
                 StackMem.Top = Top;
 
                 // Ensure that the mark is only popped once by clearing the top pointer.
-                Top = NULL;
+                Top = nullptr;
             }
         }
 
