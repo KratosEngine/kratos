@@ -7,6 +7,7 @@ namespace Kratos
 {
     class FileSystem;
     class LogSystem;
+    class WindowSystem;
 
     /// Manage the lifetime and creation/destruction order of all global system
     class RuntimeGlobalContext
@@ -20,6 +21,7 @@ namespace Kratos
     public:
         std::shared_ptr<FileSystem> m_file_system;
         std::shared_ptr<LogSystem> m_logger_system;
+        std::shared_ptr<WindowSystem> m_window_system;
     };
 
     extern RuntimeGlobalContext g_runtime_global_context;
