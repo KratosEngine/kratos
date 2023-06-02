@@ -73,7 +73,7 @@ typedef unsigned short int ks_uint16_t;
 #include <windows.h>
 #pragma warning(disable : 4251) // 去除模板导出编译的警告
 #pragma warning(disable : 4595)
-#define KS_TCHAR KS_TCHAR
+#define KS_TCHAR TCHAR
 #define KS_DWORD DWORD
 #else
 #include <stdio.h>
@@ -107,147 +107,147 @@ typedef unsigned short int ks_uint16_t;
 #include "runtime/core/base/macro.h"
 namespace Kratos
 {
-    inline void KSMemset(void *pDest, int iC, ks_usize_t uiCount)
-    {
-        memset(pDest, iC, uiCount);
-    }
-
-    inline void KSStrCopy(KS_TCHAR *pDest, unsigned int uiCount, const KS_TCHAR *pSource)
-    {
-#if KS_PLATFORM == KS_PLATFORM_WIN
-        _tcscpy_s(pDest, uiCount, pSource);
-#else
-        strncpy(pDest, pSource, uiCount);
-#endif
-    }
-
-    inline unsigned int KSStrLen(const KS_TCHAR *pStr)
-    {
-#if KS_PLATFORM == KS_PLATFORM_WIN
-        return (unsigned int)_tcslen(pStr);
-#else
-        return (unsigned int)strlen(pStr);
-#endif
-    }
-
-    inline void KSStrcat(KS_TCHAR *pDest, unsigned int uiCount, const KS_TCHAR *pSource)
-    {
-#if KS_PLATFORM == KS_PLATFORM_WIN
-        _tcscat_s(pDest, uiCount, pSource);
-#else
-        strncat(pDest, pSource, uiCount);
-#endif
-    }
-
-    inline bool KSMemcpy(void *pDest, const void *pSrc, ks_usize_t uiCountSize, ks_usize_t uiDestBufferSize = 0)
-    {
-        if (!uiDestBufferSize)
+        inline void KSMemset(void *pDest, int iC, ks_usize_t uiCount)
         {
-            uiDestBufferSize = uiCountSize;
+                memset(pDest, iC, uiCount);
         }
+
+        inline void KSStrCopy(KS_TCHAR *pDest, unsigned int uiCount, const KS_TCHAR *pSource)
+        {
 #if KS_PLATFORM == KS_PLATFORM_WIN
-        return (memcpy_s(pDest, uiDestBufferSize, pSrc, uiCountSize) == 0);
+                _tcscpy_s(pDest, uiCount, pSource);
+#else
+                strncpy(pDest, pSource, uiCount);
+#endif
+        }
+
+        inline unsigned int KSStrLen(const KS_TCHAR *pStr)
+        {
+#if KS_PLATFORM == KS_PLATFORM_WIN
+                return (unsigned int)_tcslen(pStr);
+#else
+                return (unsigned int)strlen(pStr);
+#endif
+        }
+
+        inline void KSStrcat(KS_TCHAR *pDest, unsigned int uiCount, const KS_TCHAR *pSource)
+        {
+#if KS_PLATFORM == KS_PLATFORM_WIN
+                _tcscat_s(pDest, uiCount, pSource);
+#else
+                strncat(pDest, pSource, uiCount);
+#endif
+        }
+
+        inline bool KSMemcpy(void *pDest, const void *pSrc, ks_usize_t uiCountSize, ks_usize_t uiDestBufferSize = 0)
+        {
+                if (!uiDestBufferSize)
+                {
+                        uiDestBufferSize = uiCountSize;
+                }
+#if KS_PLATFORM == KS_PLATFORM_WIN
+                return (memcpy_s(pDest, uiDestBufferSize, pSrc, uiCountSize) == 0);
 #else
 #define __STDC_WANT_LIB_EXT1__ 1
 #ifdef __STDC_LIB_EXT1__
-        int r = memcpy_s(pDest, uiDestBufferSize, pSrc, uiCountSize);
-        return r == 0;
+                int r = memcpy_s(pDest, uiDestBufferSize, pSrc, uiCountSize);
+                return r == 0;
 #endif
 #endif
-    }
+        }
 
-    inline bool KSIsSpace(int c)
-    {
+        inline bool KSIsSpace(int c)
+        {
 #if KS_PLATFORM == KS_PLATFORM_WIN
-        return _istspace(c);
+                return _istspace(c);
 #else
-        return isspace(c);
+                return isspace(c);
 #endif
-    }
+        }
 
-    inline void KSScanf(KS_TCHAR *Buf, const KS_TCHAR *_Format, va_list pArgs)
-    {
-#ifdef WINDOWS_PLATFORM
-        _stscanf_s(Buf, _Format, pArgs);
+        inline void KSScanf(KS_TCHAR *Buf, const KS_TCHAR *_Format, va_list pArgs)
+        {
+#if KS_PLATFORM == KS_PLATFORM_WIN
+                _stscanf_s(Buf, _Format, pArgs);
 #else
 #define __STDC_WANT_LIB_EXT1__ 1
 #ifdef __STDC_LIB_EXT1__
-        sscanf_s(Buf, _Format, pArgs);
+                sscanf_s(Buf, _Format, pArgs);
 #endif
 #endif
-    }
-
-    inline unsigned int KSTlsAlloc()
-    {
-#if KS_PLATFORM == KS_PLATFORM_WIN
-        return TlsAlloc();
-#else
-        // LOG_WARN("No Implement!");
-        return 0;
-#endif
-    }
-    inline void *KSGetTlsValue(unsigned int TlsSolt)
-    {
-#if KS_PLATFORM == KS_PLATFORM_WIN
-        return TlsGetValue(TlsSolt);
-#else
-        // LOG_WARN("No Implement!");
-        return nullptr;
-#endif
-    }
-    inline bool KSSetTlsValue(unsigned int TlsSolt, void *TlsValue)
-    {
-#if KS_PLATFORM == KS_PLATFORM_WIN
-        return TlsSetValue(TlsSolt, TlsValue);
-#else
-        // LOG_WARN("No Implement!");
-        return false;
-#endif
-    }
-    inline bool KSTlsFree(unsigned int TlsSolt)
-    {
-#if KS_PLATFORM == KS_PLATFORM_WIN
-        return TlsFree(TlsSolt);
-#else
-        // LOG_WARN("No Implement!");
-        return false;
-#endif
-    }
-
-    template <typename T>
-    inline T ABS(T t)
-    {
-        return t < 0 ? -t : t;
-    }
-    template <typename T>
-    inline T Min(T t0, T t1)
-    {
-        return t0 < t1 ? t0 : t1;
-    }
-    template <typename T>
-    inline T Max(T t0, T t1)
-    {
-        return t0 > t1 ? t0 : t1;
-    }
-    template <typename T>
-    inline T Clamp(T Value, T Max, T Min)
-    {
-        if (Value >= Max)
-        {
-            return Max;
         }
-        if (Value <= Min)
+
+        inline unsigned int KSTlsAlloc()
         {
-            return Min;
+#if KS_PLATFORM == KS_PLATFORM_WIN
+                return TlsAlloc();
+#else
+                // LOG_WARN("No Implement!");
+                return 0;
+#endif
         }
-        return Value;
-    }
-    template <class T>
-    inline void Swap(T &t1, T &t2)
-    {
-        T temp;
-        temp = t1;
-        t1 = t2;
-        t2 = temp;
-    }
+        inline void *KSGetTlsValue(unsigned int TlsSolt)
+        {
+#if KS_PLATFORM == KS_PLATFORM_WIN
+                return TlsGetValue(TlsSolt);
+#else
+                // LOG_WARN("No Implement!");
+                return nullptr;
+#endif
+        }
+        inline bool KSSetTlsValue(unsigned int TlsSolt, void *TlsValue)
+        {
+#if KS_PLATFORM == KS_PLATFORM_WIN
+                return TlsSetValue(TlsSolt, TlsValue);
+#else
+                // LOG_WARN("No Implement!");
+                return false;
+#endif
+        }
+        inline bool KSTlsFree(unsigned int TlsSolt)
+        {
+#if KS_PLATFORM == KS_PLATFORM_WIN
+                return TlsFree(TlsSolt);
+#else
+                // LOG_WARN("No Implement!");
+                return false;
+#endif
+        }
+
+        template <typename T>
+        inline T ABS(T t)
+        {
+                return t < 0 ? -t : t;
+        }
+        template <typename T>
+        inline T Min(T t0, T t1)
+        {
+                return t0 < t1 ? t0 : t1;
+        }
+        template <typename T>
+        inline T Max(T t0, T t1)
+        {
+                return t0 > t1 ? t0 : t1;
+        }
+        template <typename T>
+        inline T Clamp(T Value, T Max, T Min)
+        {
+                if (Value >= Max)
+                {
+                        return Max;
+                }
+                if (Value <= Min)
+                {
+                        return Min;
+                }
+                return Value;
+        }
+        template <class T>
+        inline void Swap(T &t1, T &t2)
+        {
+                T temp;
+                temp = t1;
+                t1 = t2;
+                t2 = temp;
+        }
 }
