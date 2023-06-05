@@ -23,7 +23,7 @@ namespace Kratos
 
     class KSCriticalSection
     {
-#if KS_PLATFORM == KS_PLATFORM_WIN
+#if KS_PLATFORM_WIN
         /**
          * The windows specific critical section
          */
@@ -37,7 +37,7 @@ namespace Kratos
          */
         inline KSCriticalSection(void)
         {
-#if KS_PLATFORM == KS_PLATFORM_WIN
+#if KS_PLATFORM_WIN
             InitializeCriticalSection(&CriticalSection);
             SetCriticalSectionSpinCount(&CriticalSection, 4000);
 #endif
@@ -48,7 +48,7 @@ namespace Kratos
          */
         inline ~KSCriticalSection(void)
         {
-#if KS_PLATFORM == KS_PLATFORM_WIN
+#if KS_PLATFORM_WIN
             DeleteCriticalSection(&CriticalSection); // 离开Windows临界区，和mutex解锁一个道理
 #else
             _mutex.unlock();
@@ -60,7 +60,7 @@ namespace Kratos
          */
         inline void Lock(void)
         {
-#if KS_PLATFORM == KS_PLATFORM_WIN
+#if KS_PLATFORM_WIN
             // Spin first before entering critical section, causing ring-0 transition and context switch.
             EnterCriticalSection(&CriticalSection); // 进入Windows临界区，和mutex加锁一个道理
 #else
@@ -75,7 +75,7 @@ namespace Kratos
          */
         inline bool TryLock()
         {
-#if KS_PLATFORM == KS_PLATFORM_WIN
+#if KS_PLATFORM_WIN
             if (TryEnterCriticalSection(&CriticalSection))
             {
                 return true;
@@ -93,7 +93,7 @@ namespace Kratos
          */
         inline void Unlock(void)
         {
-#if KS_PLATFORM == KS_PLATFORM_WIN
+#if KS_PLATFORM_WIN
             LeaveCriticalSection(&CriticalSection);
 #else
             _mutex.unlock();

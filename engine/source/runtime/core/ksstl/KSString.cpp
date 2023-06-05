@@ -11,7 +11,7 @@ namespace Kratos
         m_pBuffer = nullptr;
         m_pBuffer = KS_NEW KS_TCHAR[1];
         KSMAC_ASSERT(m_pBuffer);
-#if KS_PLATFORM == KS_PLATFORM_WIN
+#if KS_PLATFORM_WIN
         m_pBuffer[0] = _T('\0');
 #else
         m_pBuffer[0] = '\0';
@@ -34,7 +34,7 @@ namespace Kratos
         {
             m_pBuffer = KS_NEW KS_TCHAR[1];
             KSMAC_ASSERT(m_pBuffer);
-#if KS_PLATFORM == KS_PLATFORM_WIN
+#if KS_PLATFORM_WIN
             m_pBuffer[0] = _T('\0');
 #else
             m_pBuffer[0] = '\0';
@@ -59,7 +59,7 @@ namespace Kratos
     {
         KSMAC_ASSERT(m_pBuffer);
         m_pBuffer = KS_NEW KS_TCHAR[uiLength + 1];
-#if KS_PLATFORM == KS_PLATFORM_WIN
+#if KS_PLATFORM_WIN
         m_pBuffer[uiLength] = _T('\0');
 #else
         m_pBuffer[uiLength] = '\0';
@@ -71,7 +71,7 @@ namespace Kratos
         KSMAC_ASSERT(m_pBuffer);
         m_pBuffer = KS_NEW KS_TCHAR[1];
         KSMAC_DELETEA(m_pBuffer);
-#if KS_PLATFORM == KS_PLATFORM_WIN
+#if KS_PLATFORM_WIN
         m_pBuffer[0] = _T('\0');
 #else
         m_pBuffer[0] = '\0';
@@ -201,7 +201,7 @@ namespace Kratos
         KSMAC_DELETEA(m_pBuffer);
         m_pBuffer = KS_NEW KS_TCHAR[uiLength + 1];
         KSMemcpy(m_pBuffer, &String.m_pBuffer[uiIndex], uiLength, uiLength + 1);
-#if KS_PLATFORM == KS_PLATFORM_WIN
+#if KS_PLATFORM_WIN
         m_pBuffer[uiLength] = _T('\0');
 #else
         m_pBuffer[uiLength] = '\0';
@@ -327,7 +327,7 @@ namespace Kratos
         unsigned int uiLength = j - i + 1;
         unsigned DeltaLength = GetLength() - uiLength;
         KS_TCHAR *pBuffer = KS_NEW KS_TCHAR[DeltaLength + 1];
-#if KS_PLATFORM == KS_PLATFORM_WIN
+#if KS_PLATFORM_WIN
         pBuffer[DeltaLength] = _T('\0');
 #else
         pBuffer[DeltaLength] = '\0';
@@ -354,7 +354,7 @@ namespace Kratos
 
         unsigned int strip_chars_len = KSStrLen(pStripChars);
         KS_TCHAR *_string_in = String.GetBuffer(), *_string_out = TempBuffer;
-#if KS_PLATFORM == KS_PLATFORM_WIN
+#if KS_PLATFORM_WIN
         while (*_string_in != _T('\0'))
 #else
         while (*_string_in != '\0')
@@ -376,7 +376,7 @@ namespace Kratos
             }
             _string_in++;
         }
-#if KS_PLATFORM == KS_PLATFORM_WIN
+#if KS_PLATFORM_WIN
         *_string_out = _T('\0');
 #else
         *_string_out = '\0';
@@ -393,7 +393,7 @@ namespace Kratos
         }
         unsigned int replace_chars_len = KSStrLen(pReplaceChars);
         KS_TCHAR *_string_in = String.GetBuffer(), *_string_out = TempBuffer;
-#if KS_PLATFORM == KS_PLATFORM_WIN
+#if KS_PLATFORM_WIN
         while (*_string_in != _T('\0'))
 #else
         while (*_string_in != '\0')
@@ -419,7 +419,7 @@ namespace Kratos
             _string_out++;
             _string_in++;
         }
-#if KS_PLATFORM == KS_PLATFORM_WIN
+#if KS_PLATFORM_WIN
         *_string_out = _T('\0');
 #else
         *_string_out = '\0';
@@ -459,7 +459,7 @@ namespace Kratos
 
         KSMemcpy((void *)TempBuffer, (void *)(pString), (index + 1) * sizeof(KS_TCHAR));
         index++;
-#if KS_PLATFORM == KS_PLATFORM_WIN
+#if KS_PLATFORM_WIN
         TempBuffer[index] = _T('\0');
 #else
         TempBuffer[index] = '\0';
