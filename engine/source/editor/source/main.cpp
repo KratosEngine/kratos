@@ -3,9 +3,23 @@
 #include <string>
 #include <thread>
 #include <unordered_map>
+#include <new>
 
 #include "runtime/engine.h"
 #include "editor/include/editor.h"
+
+//https://github.com/electronicarts/EASTL/blob/master/doc/FAQ.md
+//In its default configuration, the only thing you need to provide to make EASTL work is to define implementations of the following operator new functions:  
+void* operator new[](size_t size, const char* pName, int flags, unsigned     debugFlags, const char* file, int line)
+{
+    return malloc(size);
+}
+
+void* operator new[](size_t size, size_t alignment, size_t alignmentOffset, const char* pName, int flags, unsigned debugFlags, const char* file, int line)
+{
+    return malloc(size);
+}
+
 
 int main(int argc, char **argv)
 {

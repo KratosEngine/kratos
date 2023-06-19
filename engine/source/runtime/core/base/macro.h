@@ -9,9 +9,11 @@
 #include "runtime/core/log/log_system.h"
 #include "runtime/function/global/global_context.h"
 
+
 #ifndef _DEBUG
 #define _DEBUG 0
 #endif
+
 #ifndef KS_PLATFORM_WIN
 #define KS_PLATFORM_WIN 0
 #endif
@@ -29,6 +31,13 @@
 #endif
 #ifndef KS_PLATFORM_NACL
 #define KS_PLATFORM_NACL 0
+#endif
+
+#ifndef KS_ARCHITECTURE_32
+#define KS_ARCHITECTURE_32 0
+#endif
+#ifndef KS_ARCHITECTURE_64
+#define KS_ARCHITECTURE_64 0
 #endif
 
 /* Finds the current platform */
@@ -52,12 +61,6 @@
 #define KS_PLATFORM_LINUX 1
 #endif
 
-#ifndef KS_ARCHITECTURE_32
-#define KS_ARCHITECTURE_32 0
-#endif
-#ifndef KS_ARCHITECTURE_64
-#define KS_ARCHITECTURE_64 0
-#endif
 /* Find the arch type */
 #if defined(__x86_64__) || defined(_M_X64) || defined(__powerpc64__) || defined(__alpha__) || defined(__ia64__) || defined(__s390__) || defined(__s390x__) || defined(__arch64__) || defined(_LP64)
 #define KS_ARCHITECTURE_64 1
@@ -149,11 +152,6 @@ typedef unsigned short int ks_uint16_t;
 #endif
 namespace Kratos
 {
-        inline void KSMemset(void *pDest, int iC, ks_usize_t uiCount)
-        {
-                memset(pDest, iC, uiCount);
-        }
-
         inline void KSStrCopy(KS_TCHAR *pDest, unsigned int uiCount, const KS_TCHAR *pSource)
         {
 #if KS_PLATFORM_WIN
@@ -165,7 +163,7 @@ namespace Kratos
 
         inline int KSStrCmp(const TCHAR *String1, const TCHAR *String2)
         {
-#ifdef KS_PLATFORM_WIN
+#if KS_PLATFORM_WIN
                 return _tcscmp(String1, String2);
 #else
                 return;
@@ -173,7 +171,7 @@ namespace Kratos
         }
         inline int KSStrnCmp(const TCHAR *String1, const TCHAR *String2, unsigned int uiMaxNum)
         {
-#ifdef KS_PLATFORM_WIN
+#if KS_PLATFORM_WIN
                 return _tcsncmp(String1, String2, uiMaxNum);
 #else
                 return;

@@ -1,4 +1,6 @@
 
+#include <string.h>
+
 #include "runtime/core/math/matrix3X3.h"
 
 namespace Kratos
@@ -230,7 +232,7 @@ namespace Kratos
     /*********************************** inline *************************************/
     inline void Matrix3X3::Identity(void)
     {
-        KSMemset(m, 0, sizeof(Matrix3X3));
+        memset(m, 0, sizeof(Matrix3X3));
         _00 = _11 = _22 = 1.0f;
     }
 

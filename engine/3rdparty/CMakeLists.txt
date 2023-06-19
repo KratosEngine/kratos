@@ -33,3 +33,8 @@ if(NOT TARGET stb)
     include(stb.cmake)
     set_target_properties(stb PROPERTIES FOLDER ${third_party_folder}/stb)
 endif()
+
+if(NOT TARGET EASTL)
+    add_subdirectory(EASTL)
+    set_target_properties(EASTL PROPERTIES FOLDER ${third_party_folder}/EASTL)
+endif()
