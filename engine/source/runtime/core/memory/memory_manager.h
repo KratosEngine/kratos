@@ -212,8 +212,8 @@ namespace Kratos
         };
 
         // Variables.
-        ks_uint8_t *Top;                   // Top of current chunk (Top<=End).
-        ks_uint8_t *End;                   // End of current chunk.
+        ks_uint8_t *Top;             // Top of current chunk (Top<=End).
+        ks_uint8_t *End;             // End of current chunk.
         ks_usize_t DefaultChunkSize; // Maximum chunk size to allocate.
         FTaggedMemory *TopChunk;     // Only chunks 0..ActiveChunks-1 are valid.
 
@@ -392,11 +392,11 @@ namespace Kratos
     };
 }
 
-inline void* operator new(size_t uiSize)
+inline void *operator new(size_t uiSize)
 {
     return Kratos::KSMemObject::GetMemManager().Allocate(uiSize, 0, false);
 }
-inline void* operator new[](size_t uiSize)
+inline void *operator new[](size_t uiSize)
 {
     return Kratos::KSMemObject::GetMemManager().Allocate(uiSize, 0, true);
 }

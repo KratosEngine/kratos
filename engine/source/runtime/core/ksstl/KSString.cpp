@@ -466,4 +466,121 @@ namespace Kratos
 #endif
         *this = TempBuffer;
     }
+
+    KSString operator+(const KSString &String1, const KSString &String2)
+    {
+        unsigned int uiLength1 = String1.GetLength();
+        unsigned int uiLength2 = String2.GetLength();
+        if (!uiLength2)
+            return String1;
+        else if (!uiLength1)
+            return String2;
+        else
+        {
+            KS_TCHAR *pBuffer = NULL;
+            unsigned int uiLength = uiLength2 + uiLength1 + 1;
+            pBuffer = KS_NEW KS_TCHAR[uiLength];
+            KSMAC_ASSERT(pBuffer);
+
+            KSStrCopy(pBuffer, uiLength, String1.GetBuffer());
+            KSStrcat(pBuffer, uiLength, String2.GetBuffer());
+            KSString ReturnValue(pBuffer);
+            KSMAC_DELETEA(pBuffer);
+            return ReturnValue;
+        }
+    }
+    KSString operator+(const KSString &String1, const KS_TCHAR *String2)
+    {
+        KSMAC_ASSERT(String2);
+        unsigned int uiLength1 = String1.GetLength();
+        unsigned int uiLength2 = 0;
+        if (String2)
+        {
+            uiLength2 = (unsigned int)KSStrLen(String2);
+        }
+
+        if (!uiLength2)
+            return String1;
+        else if (!uiLength1)
+            return KSString(String2);
+        else
+        {
+            KS_TCHAR *pBuffer = NULL;
+            unsigned int uiLength = uiLength2 + uiLength1 + 1;
+            pBuffer = KS_NEW KS_TCHAR[uiLength];
+            KSMAC_ASSERT(pBuffer);
+
+            KSStrCopy(pBuffer, uiLength, String1.GetBuffer());
+            KSStrcat(pBuffer, uiLength, String2);
+            KSString ReturnValue(pBuffer);
+            KSMAC_DELETEA(pBuffer);
+            return ReturnValue;
+        }
+    }
+    KSString operator+(const KS_TCHAR *String1, const KSString &String2)
+    {
+        KSMAC_ASSERT(String1);
+        unsigned int uiLength2 = String2.GetLength();
+        unsigned int uiLength1 = 0;
+        if (String1)
+        {
+            uiLength1 = (unsigned int)KSStrLen(String1);
+        }
+
+        if (!uiLength1)
+            return String2;
+        else if (!uiLength2)
+            return KSString(String1);
+        else
+        {
+            KS_TCHAR *pBuffer = NULL;
+            unsigned int uiLength = uiLength2 + uiLength1 + 1;
+            pBuffer = KS_NEW KS_TCHAR[uiLength];
+            KSMAC_ASSERT(pBuffer);
+
+            KSStrCopy(pBuffer, uiLength, String1);
+            KSStrcat(pBuffer, uiLength, String2.GetBuffer());
+            KSString ReturnValue(pBuffer);
+            KSMAC_DELETEA(pBuffer);
+            return ReturnValue;
+        }
+    }
+    int CompareString(const KSString &String1, const KSString &String2)
+    {
+        return KSStrCmp(String1.GetBuffer(), String2.GetBuffer());
+    }
+    int CompareString(const KSString &String1, const KS_TCHAR *String2)
+    {
+        return KSStrCmp(String1.GetBuffer(), String2);
+    }
+    int CompareString(const KS_TCHAR *String1, const KSString &String2)
+    {
+        return KSStrCmp(String1, String2.GetBuffer());
+    }
+
+    bool operator==(const KSString &String1, const KSString &String2)
+    {
+        return (KSStrCmp(String1.GetBuffer(), String2.GetBuffer()) == 0);
+    }
+    bool operator==(const KSString &String1, const KS_TCHAR *String2)
+    {
+        return (KSStrCmp(String1.GetBuffer(), String2) == 0);
+    }
+    bool operator==(const KS_TCHAR *String1, KSString &String2)
+    {
+        return (KSStrCmp(String1, String2.GetBuffer()) == 0);
+    }
+
+    bool operator!=(const KSString &String1, const KSString &String2)
+    {
+        return (KSStrCmp(String1.GetBuffer(), String2.GetBuffer()) != 0);
+    }
+    bool operator!=(const KSString &String1, const KS_TCHAR *String2)
+    {
+        return (KSStrCmp(String1.GetBuffer(), String2) != 0);
+    }
+    bool operator!=(const KS_TCHAR *String1, const KSString &String2)
+    {
+        return (KSStrCmp(String1, String2.GetBuffer()) != 0);
+    }
 }

@@ -38,13 +38,13 @@
 //////////////////////////////////////////////////////////////////////////
 #elif defined(__APPLE_CC__) || defined(__APPLE__) || defined(__OSX__)
 #if defined(__arm__) || (TARGET_IPHONE_SIMULATOR)
-#define KS_PLATFORM_IPHONE 1 
+#define KS_PLATFORM_IPHONE 1
 #else
-#define KS_PLATFORM_OSX 1 
+#define KS_PLATFORM_OSX 1
 #endif
 //////////////////////////////////////////////////////////////////////////
 #elif defined(__ANDROID__)
-#define KS_PLATFORM_ANDROID 1 
+#define KS_PLATFORM_ANDROID 1
 //////////////////////////////////////////////////////////////////////////
 #elif defined(__native_client__)
 #define KS_PLATFORM_NACL 1
@@ -62,7 +62,7 @@
 #if defined(__x86_64__) || defined(_M_X64) || defined(__powerpc64__) || defined(__alpha__) || defined(__ia64__) || defined(__s390__) || defined(__s390x__) || defined(__arch64__) || defined(_LP64)
 #define KS_ARCHITECTURE_64 1
 #else
-#define KS_ARCHITECTURE_32 1 
+#define KS_ARCHITECTURE_32 1
 #endif
 
 #ifndef KS_LITTLE_ENDIAN
@@ -73,14 +73,14 @@
 #endif
 // Endian
 #if (defined(__APPLE__) && defined(__BIG_ENDIAN__)) || KS_PLATFORM_WIN
-#define KS_BIG_ENDIAN 1 
+#define KS_BIG_ENDIAN 1
 #else
-#define KS_LITTLE_ENDIAN 1 
+#define KS_LITTLE_ENDIAN 1
 #endif
 
-//log macro
+// log macro
 #define LOG_HELPER(LOG_LEVEL, ...) \
-    g_runtime_global_context.m_logger_system->log(LOG_LEVEL, "[" + std::string(__FUNCTION__) + "] " + __VA_ARGS__);
+        g_runtime_global_context.m_logger_system->log(LOG_LEVEL, "[" + std::string(__FUNCTION__) + "] " + __VA_ARGS__);
 
 #define LOG_DEBUG(...) LOG_HELPER(LogSystem::LogLevel::debug, __VA_ARGS__);
 
@@ -147,7 +147,6 @@ typedef unsigned short int ks_uint16_t;
 #define ks_ssize_t signed int
 #define ks_usize_t unsigned int
 #endif
-
 namespace Kratos
 {
         inline void KSMemset(void *pDest, int iC, ks_usize_t uiCount)
@@ -161,6 +160,23 @@ namespace Kratos
                 _tcscpy_s(pDest, uiCount, pSource);
 #else
                 strncpy(pDest, pSource, uiCount);
+#endif
+        }
+
+        inline int KSStrCmp(const TCHAR *String1, const TCHAR *String2)
+        {
+#ifdef KS_PLATFORM_WIN
+                return _tcscmp(String1, String2);
+#else
+                return;
+#endif
+        }
+        inline int KSStrnCmp(const TCHAR *String1, const TCHAR *String2, unsigned int uiMaxNum)
+        {
+#ifdef KS_PLATFORM_WIN
+                return _tcsncmp(String1, String2, uiMaxNum);
+#else
+                return;
 #endif
         }
 
@@ -294,5 +310,3 @@ namespace Kratos
                 t2 = temp;
         }
 }
-
-

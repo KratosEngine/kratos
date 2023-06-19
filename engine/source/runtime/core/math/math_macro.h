@@ -2,9 +2,6 @@
 
 #include <cmath>
 
-namespace Kratos
-{
-
 #define KSFLOAT // 精度
 #ifdef KSFLOAT
 #define KSREAL float
@@ -57,6 +54,3 @@ namespace Kratos
 #define KSOUT			4
 #define KSIN			5
 #define KSNOINTERSECT	6
-
-
-} // namespace Kratos

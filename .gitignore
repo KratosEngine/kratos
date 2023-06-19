@@ -18,3 +18,4 @@ build/
 engine/bin
 .vscode
 bin/
+.vs/

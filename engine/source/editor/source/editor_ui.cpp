@@ -60,6 +60,7 @@ namespace Kratos
 
         // setup window icon
         // todo zxs
+
     }
 
     void EditorUI::preRender()

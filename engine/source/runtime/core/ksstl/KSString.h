@@ -1,6 +1,7 @@
 
 #pragma once
 
+#include "runtime/core/math/math_macro.h"
 #include "runtime/core/ksstl/KSContainer.h"
 
 namespace Kratos
@@ -60,4 +61,23 @@ namespace Kratos
     protected:
         KS_TCHAR *m_pBuffer;
     };
+
+    // 重载+操作符
+    KSString operator+(const KSString &String1, const KSString &String2);
+    KSString operator+(const KSString &String1, const KS_TCHAR *String2);
+    KSString operator+(const KS_TCHAR *String1, const KSString &String2);
+
+    // 大于返回大于0，小于返回小于0，等于返回0
+    int CompareString(const KSString &String1, const KSString &String2);
+    int CompareString(const KSString &String1, const KS_TCHAR *String2);
+    int CompareString(const KS_TCHAR *String1, const KSString &String2);
+
+    // 重载==操作符
+    bool operator==(const KSString &String1, const KSString &String2);
+    bool operator==(const KSString &String1, const KS_TCHAR *String2);
+    bool operator==(const KS_TCHAR *String1, KSString &String2);
+    // 重载!=操作符
+    bool operator!=(const KSString &String1, const KSString &String2);
+    bool operator!=(const KSString &String1, const KS_TCHAR *String2);
+    bool operator!=(const KS_TCHAR *String1, const KSString &String2);
 }
