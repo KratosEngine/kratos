@@ -146,7 +146,7 @@ namespace Kratos
 #if KS_PLATFORM == KS_PLATFORM_WIN
                 return _tcscmp(String1, String2);
 #else
-                return;
+                return 0;
 #endif
         }
         inline int KSStrnCmp(const KS_TCHAR *String1, const KS_TCHAR *String2, unsigned int uiMaxNum)
@@ -154,7 +154,7 @@ namespace Kratos
 #if KS_PLATFORM == KS_PLATFORM_WIN
                 return _tcsncmp(String1, String2, uiMaxNum);
 #else
-                return;
+                return 0;
 #endif
         }
 
