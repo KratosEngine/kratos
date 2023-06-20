@@ -26,7 +26,7 @@ void *KSCMem::Allocate(ks_usize_t uiSize, ks_usize_t uiAlignment, bool bIsArray)
     }
     else
     {
-#if KS_PLATFORM_WIN
+#if KS_PLATFORM == KS_PLATFORM_WIN
         return _aligned_malloc(uiSize, uiAlignment);
 #else
         return aligned_alloc(uiSize, uiAlignment);
@@ -43,7 +43,7 @@ void KSCMem::Deallocate(char *pcAddr, ks_usize_t uiAlignment, bool bIsArray)
     }
     else
     {
-#if KS_PLATFORM_WIN
+#if KS_PLATFORM == KS_PLATFORM_WIN
         _aligned_free(pcAddr);
 #else
         free(pcAddr);

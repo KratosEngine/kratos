@@ -5,7 +5,7 @@ using namespace Kratos;
 
 unsigned int KSSynchronize::WaitAll(KSSynchronize **pSynchronize, unsigned int uiNum, bool bWaitAll, KS_DWORD dwMilliseconds)
 {
-#if KS_PLATFORM_WIN
+#if KS_PLATFORM == KS_PLATFORM_WIN
     KSMAC_ASSERT(uiNum >= 1 && uiNum <= MAXIMUM_WAIT_OBJECTS);
     static HANDLE handle[MAXIMUM_WAIT_OBJECTS];
     for (unsigned int i = 0; i < uiNum; i++)
@@ -31,7 +31,7 @@ unsigned int KSSynchronize::WaitAll(KSSynchronize **pSynchronize, unsigned int u
 void KSSynchronize::SafeOutputDebugString(const KS_TCHAR *pcString, ...)
 {
     // KSCriticalSection::Locker Temp(g_SafeOutputString);
-#if KS_PLATFORM_WIN
+#if KS_PLATFORM == KS_PLATFORM_WIN
     char *pArgs;
     pArgs = (char *)&pcString + sizeof(pcString);
     // _vstprintf_s(VSSystem::ms_sLogBuffer, LOG_BUFFER_SIZE, pcString, pArgs);
@@ -44,7 +44,7 @@ void KSSynchronize::SafeOutputDebugString(const KS_TCHAR *pcString, ...)
 KSSemaphore::KSSemaphore(unsigned int uiCount, unsigned int MaxCount)
 {
     KSMAC_ASSERT(uiCount <= MaxCount);
-#if KS_PLATFORM_WIN
+#if KS_PLATFORM == KS_PLATFORM_WIN
     m_Semaphore = CreateSemaphore(nullptr, uiCount, MaxCount, nullptr);
     KSMAC_ASSERT(m_Semaphore);
 #else
@@ -55,7 +55,7 @@ KSSemaphore::KSSemaphore(unsigned int uiCount, unsigned int MaxCount)
 //----------------------------------------------------------------------------
 KSSemaphore::~KSSemaphore()
 {
-#if KS_PLATFORM_WIN
+#if KS_PLATFORM == KS_PLATFORM_WIN
     BOOL closed = CloseHandle((HANDLE)m_Semaphore);
     KSMAC_ASSERT(closed);
 #else
@@ -66,7 +66,7 @@ KSSemaphore::~KSSemaphore()
 //----------------------------------------------------------------------------
 void KSSemaphore::Enter()
 {
-#if KS_PLATFORM_WIN
+#if KS_PLATFORM == KS_PLATFORM_WIN
     KS_DWORD result = WaitForSingleObject((HANDLE)m_Semaphore, INFINITE);
     KSMAC_ASSERT(result);
 #else
@@ -81,7 +81,7 @@ void KSSemaphore::Enter()
 //----------------------------------------------------------------------------
 void KSSemaphore::Leave(unsigned int uiReleaseCount)
 {
-#if KS_PLATFORM_WIN
+#if KS_PLATFORM == KS_PLATFORM_WIN
     BOOL released = ReleaseSemaphore((HANDLE)m_Semaphore, uiReleaseCount, nullptr);
     KSMAC_ASSERT(released);
 #else
@@ -91,7 +91,7 @@ void KSSemaphore::Leave(unsigned int uiReleaseCount)
 
 KSMutex::KSMutex()
 {
-#if KS_PLATFORM_WIN
+#if KS_PLATFORM == KS_PLATFORM_WIN
     m_Mutex = CreateMutex(nullptr, FALSE, nullptr);
 #else
     LOG_WARN("no thread implement");
@@ -101,7 +101,7 @@ KSMutex::KSMutex()
 //----------------------------------------------------------------------------
 KSMutex::~KSMutex()
 {
-#if KS_PLATFORM_WIN
+#if KS_PLATFORM == KS_PLATFORM_WIN
     BOOL closed = CloseHandle((HANDLE)m_Mutex);
     KSMAC_ASSERT(closed);
 #else
@@ -112,7 +112,7 @@ KSMutex::~KSMutex()
 //----------------------------------------------------------------------------
 void KSMutex::Enter()
 {
-#if KS_PLATFORM_WIN
+#if KS_PLATFORM == KS_PLATFORM_WIN
     KS_DWORD result = WaitForSingleObject((HANDLE)m_Mutex, INFINITE);
     KSMAC_ASSERT(result != WAIT_FAILED);
 #else
@@ -127,7 +127,7 @@ void KSMutex::Enter()
 //----------------------------------------------------------------------------
 void KSMutex::Leave()
 {
-#if KS_PLATFORM_WIN
+#if KS_PLATFORM == KS_PLATFORM_WIN
     BOOL released = ReleaseMutex((HANDLE)m_Mutex);
     KSMAC_ASSERT(released);
 #else
@@ -147,7 +147,7 @@ KSEvent::~KSEvent(void)
 {
     if (Event != nullptr)
     {
-#if KS_PLATFORM_WIN
+#if KS_PLATFORM == KS_PLATFORM_WIN
         CloseHandle(Event);
 #else
         LOG_WARN("no thread implement");
@@ -160,7 +160,7 @@ KSEvent::~KSEvent(void)
  */
 void KSEvent::Lock(void)
 {
-#if KS_PLATFORM_WIN
+#if KS_PLATFORM == KS_PLATFORM_WIN
     WaitForSingleObject(Event, INFINITE);
 #else
     LOG_WARN("no thread implement");
@@ -172,7 +172,7 @@ void KSEvent::Lock(void)
  */
 void KSEvent::Unlock(void)
 {
-#if KS_PLATFORM_WIN
+#if KS_PLATFORM == KS_PLATFORM_WIN
     PulseEvent(Event);
 #else
     LOG_WARN("no thread implement");
@@ -192,7 +192,7 @@ void KSEvent::Unlock(void)
 bool KSEvent::Create(bool bIsManualReset, const KS_TCHAR *InName)
 {
     // Create the event and default it to non-signaled
-#if KS_PLATFORM_WIN
+#if KS_PLATFORM == KS_PLATFORM_WIN
     Event = CreateEvent(nullptr, bIsManualReset, 0, InName);
     return Event != nullptr;
 #else
@@ -205,7 +205,7 @@ bool KSEvent::Create(bool bIsManualReset, const KS_TCHAR *InName)
  */
 void KSEvent::Trigger(void)
 {
-#if KS_PLATFORM_WIN
+#if KS_PLATFORM == KS_PLATFORM_WIN
     SetEvent(Event);
 #else
     LOG_WARN("no thread implement");
@@ -217,7 +217,7 @@ void KSEvent::Trigger(void)
  */
 void KSEvent::Reset(void)
 {
-#if KS_PLATFORM_WIN
+#if KS_PLATFORM == KS_PLATFORM_WIN
     ResetEvent(Event);
 #else
     LOG_WARN("no thread implement");
@@ -231,7 +231,7 @@ void KSEvent::Reset(void)
  */
 void KSEvent::Pulse(void)
 {
-#if KS_PLATFORM_WIN
+#if KS_PLATFORM == KS_PLATFORM_WIN
     PulseEvent(Event);
 #else
     LOG_WARN("no thread implement");
@@ -248,7 +248,7 @@ void KSEvent::Pulse(void)
  */
 bool KSEvent::Wait(KS_DWORD WaitTime)
 {
-#if KS_PLATFORM_WIN
+#if KS_PLATFORM == KS_PLATFORM_WIN
     return WaitForSingleObject(Event, WaitTime) == WAIT_OBJECT_0;
 #else
     LOG_WARN("no thread implement");
