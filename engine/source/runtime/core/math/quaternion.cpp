@@ -36,6 +36,11 @@ namespace Kratos
         w *= Invm;
     }
 
+    KSREAL Quaternion::Dot(const Quaternion& q) const
+    {
+        return (w * q.w + x * q.x + y * q.y + z * q.z);
+    }
+
     Quaternion Quaternion::operator~(void) const
     {
         return Quaternion(-x, -y, -z, w);

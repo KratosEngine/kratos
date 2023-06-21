@@ -1,7 +1,8 @@
 #pragma once
 
-#include <memory>
 #include <string>
+
+#include <EASTL/shared_ptr.h>
 
 namespace Kratos
 {
@@ -19,9 +20,9 @@ namespace Kratos
         void shutdownSystems();
 
     public:
-        std::shared_ptr<FileSystem> m_file_system;
-        std::shared_ptr<LogSystem> m_logger_system;
-        std::shared_ptr<WindowSystem> m_window_system;
+        eastl::shared_ptr<FileSystem> m_file_system;
+        eastl::shared_ptr<LogSystem> m_logger_system;
+        eastl::shared_ptr<WindowSystem> m_window_system;
     };
 
     extern RuntimeGlobalContext g_runtime_global_context;

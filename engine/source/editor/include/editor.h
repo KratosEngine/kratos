@@ -1,7 +1,8 @@
 #pragma once
 
 #include <assert.h>
-#include <memory>
+
+#include <EASTL/shared_ptr.h>
 
 namespace Kratos
 {
@@ -21,7 +22,7 @@ namespace Kratos
 
 	protected:
 	protected:
-		std::shared_ptr<EditorUI> m_editor_ui;
+		eastl::shared_ptr<EditorUI> m_editor_ui;
 		KratosEngine *m_engine_runtime{nullptr};
 	};
 

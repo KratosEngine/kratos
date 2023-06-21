@@ -24,7 +24,7 @@ void KratosEditor::initialize(KratosEngine *engine_runtime)
 											 engine_runtime};
 	g_editor_global_context.initialize(init_info);
 
-	m_editor_ui = std::make_shared<EditorUI>();
+	m_editor_ui = eastl::make_shared<EditorUI>();
 	ApplicationUIInitInfo ui_init_info = {
 		g_runtime_global_context.m_window_system,
 	};

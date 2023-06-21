@@ -6,6 +6,8 @@
 #include <string>
 #include <unordered_set>
 
+#include <EASTL/shared_ptr.h>
+
 namespace Kratos
 {
     extern bool g_is_editor_mode;

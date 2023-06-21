@@ -21,7 +21,9 @@ namespace Kratos
         void Set(KSREAL _x, KSREAL _y, KSREAL _z, KSREAL _w);
 
         void Normalize(void);
-
+		//求点积
+		KSREAL Dot(const Quaternion& q)const;
+        //求共轭
         Quaternion operator ~(void) const;
     };
 

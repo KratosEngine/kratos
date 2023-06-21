@@ -1,6 +1,6 @@
 #pragma once
 
-#include <memory>
+#include <EASTL/shared_ptr.h>
 
 namespace Kratos
 {
@@ -8,7 +8,7 @@ namespace Kratos
 
     struct ApplicationUIInitInfo
     {
-        std::shared_ptr<WindowSystem> window_system;
+        eastl::shared_ptr<WindowSystem> window_system;
     };
 
     class KSApplication

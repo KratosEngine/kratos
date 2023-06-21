@@ -31,7 +31,7 @@ namespace Kratos
     void KratosEngine::run()
     {
         //实际运行游戏主入口逻辑（编辑器走的自己的run方法）
-        std::shared_ptr<WindowSystem> window_system = g_runtime_global_context.m_window_system;
+        eastl::shared_ptr<WindowSystem> window_system = g_runtime_global_context.m_window_system;
         KSMAC_ASSERT(window_system);
         while (!window_system->shouldClose())
         {
