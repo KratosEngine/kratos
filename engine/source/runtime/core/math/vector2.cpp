@@ -1,5 +1,5 @@
 
-#include "runtime/core/math/vector2.h"
+#include "runtime/core/math/Vector2.h"
 
 namespace Kratos
 {

@@ -1,5 +1,5 @@
-#include "runtime/core/math/vector3.h"
-#include "runtime/core/math/matrix3X3.h"
+#include "runtime/core/math/Vector3.h"
+#include "runtime/core/math/Matrix3X3.h"
 
 namespace Kratos
 {
