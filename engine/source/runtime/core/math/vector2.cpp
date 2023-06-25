@@ -1,62 +1,62 @@
 
-#include "runtime/core/math/Vector2.h"
+#include "runtime/core/math/vector2.h"
 
 namespace Kratos
 {
-    Vector2::Vector2()
+    vector2::vector2()
     {
         x = 0;
         y = 0;
     }
 
-    Vector2::Vector2(KSREAL _x, KSREAL _y)
+    vector2::vector2(KSREAL _x, KSREAL _y)
     {
         x = _x;
         y = _y;
     }
 
-    void Vector2::operator+=(const Vector2 &rhs)
+    void vector2::operator+=(const vector2 &rhs)
     {
         x += rhs.x;
         y += rhs.y;
     }
 
-    void Vector2::operator-=(const Vector2 &rhs)
+    void vector2::operator-=(const vector2 &rhs)
     {
         x -= rhs.x;
         y -= rhs.y;
     }
 
-    void Vector2::operator*=(KSREAL scalar)
+    void vector2::operator*=(KSREAL scalar)
     {
         x *= scalar;
         y *= scalar;
     }
 
-    void Vector2::operator/=(KSREAL scalar)
+    void vector2::operator/=(KSREAL scalar)
     {
         x /= scalar;
         y /= scalar;
     }
 
-    void Vector2::operator+=(KSREAL scalar)
+    void vector2::operator+=(KSREAL scalar)
     {
         x += scalar;
         y += scalar;
     }
 
-    void Vector2::operator-=(KSREAL scalar)
+    void vector2::operator-=(KSREAL scalar)
     {
         x -= scalar;
         y -= scalar;
     }
 
-    KSREAL Vector2::dotProduct(const Vector2 &rhs) const
+    KSREAL vector2::dotProduct(const vector2 &rhs) const
     {
         return (x * rhs.x + y * rhs.y);
     }
 
-    bool Vector2::operator==(const Vector2 &rhs) const
+    bool vector2::operator==(const vector2 &rhs) const
     {
         for (unsigned int i = 0; i < 2; i++)
         {
@@ -68,44 +68,44 @@ namespace Kratos
         return true;
     }
 
-    Vector2 Vector2::operator*(KSREAL scalar) const
+    vector2 vector2::operator*(KSREAL scalar) const
     {
-        return Vector2(x * scalar, y * scalar);
+        return vector2(x * scalar, y * scalar);
     }
 
-    Vector2 Vector2::operator/(KSREAL scalar) const
+    vector2 vector2::operator/(KSREAL scalar) const
     {
-        return Vector2(x / scalar, y / scalar);
+        return vector2(x / scalar, y / scalar);
     }
 
-    Vector2 Vector2::operator+(KSREAL scalar) const
+    vector2 vector2::operator+(KSREAL scalar) const
     {
-        return Vector2(x + scalar, y + scalar);
+        return vector2(x + scalar, y + scalar);
     }
 
-    Vector2 Vector2::operator-(KSREAL scalar) const
+    vector2 vector2::operator-(KSREAL scalar) const
     {
-        return Vector2(x - scalar, y - scalar);
+        return vector2(x - scalar, y - scalar);
     }
 
-    Vector2 Vector2::operator+(const Vector2 &rhs) const
+    vector2 vector2::operator+(const vector2 &rhs) const
     {
-        return Vector2(x + rhs.x, y + rhs.y);
+        return vector2(x + rhs.x, y + rhs.y);
     }
 
-    Vector2 Vector2::operator-(const Vector2 &rhs) const
+    vector2 vector2::operator-(const vector2 &rhs) const
     {
-        return Vector2(x - rhs.x, y - rhs.y);
+        return vector2(x - rhs.x, y - rhs.y);
     }
 
-    inline void Vector2::Set(KSREAL _x, KSREAL _y)
+    inline void vector2::Set(KSREAL _x, KSREAL _y)
     {
         x = _x;
         y = _y;
     }
 
     // 对于任何非零向量。向量除以它的大小（模）
-    inline void Vector2::Normalize()
+    inline void vector2::Normalize()
     {
         KSREAL scalar = x * x + y * y;
         if (scalar > EPSILON_E4)

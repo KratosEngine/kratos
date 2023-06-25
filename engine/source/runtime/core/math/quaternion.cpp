@@ -1,8 +1,8 @@
-#include "runtime/core/math/Quaternion.h"
+#include "runtime/core/math/quaternion.h"
 
 namespace Kratos
 {
-    Quaternion::Quaternion(void)
+    quaternion::quaternion(void)
     {
         x = 0.0f,
         y = 0.0f,
@@ -10,7 +10,7 @@ namespace Kratos
         w = 1.0f;
     }
 
-    Quaternion::Quaternion(KSREAL _x, KSREAL _y, KSREAL _z, KSREAL _w)
+    quaternion::quaternion(KSREAL _x, KSREAL _y, KSREAL _z, KSREAL _w)
     {
         x = _x;
         y = _y;
@@ -18,7 +18,7 @@ namespace Kratos
         w = _w;
     }
 
-    void Quaternion::Set(KSREAL _x, KSREAL _y, KSREAL _z, KSREAL _w)
+    void quaternion::Set(KSREAL _x, KSREAL _y, KSREAL _z, KSREAL _w)
     {
         x = _x;
         y = _y;
@@ -26,7 +26,7 @@ namespace Kratos
         w = _w;
     }
 
-    void Quaternion::Normalize(void)
+    void quaternion::Normalize(void)
     {
         KSREAL m = Math::sqrt(x * x + y * y + z * z + w * w);
         KSREAL Invm = 1.0f / m;
@@ -36,14 +36,14 @@ namespace Kratos
         w *= Invm;
     }
 
-    KSREAL Quaternion::Dot(const Quaternion& q) const
+    KSREAL quaternion::Dot(const quaternion& q) const
     {
         return (w * q.w + x * q.x + y * q.y + z * q.z);
     }
 
-    Quaternion Quaternion::operator~(void) const
+    quaternion quaternion::operator~(void) const
     {
-        return Quaternion(-x, -y, -z, w);
+        return quaternion(-x, -y, -z, w);
     }
 
 }

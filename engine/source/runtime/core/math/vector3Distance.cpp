@@ -1,8 +1,8 @@
-#include "runtime/core/math/Vector3.h"
+#include "runtime/core/math/vector3.h"
 
 namespace Kratos
 {
-    KSREAL Vector3::SquaredDistance(const Vector3 &Point) const
+    KSREAL vector3::SquaredDistance(const vector3 &Point) const
     {
         return (x * Point.x + y * Point.y + z * Point.z);
     }

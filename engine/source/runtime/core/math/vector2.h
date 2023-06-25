@@ -5,7 +5,7 @@
 
 namespace Kratos
 {
-    class Vector2
+    class vector2
     {
     public:
         union
@@ -17,12 +17,12 @@ namespace Kratos
             };
         };
 
-        Vector2(void);
-        Vector2(KSREAL _x, KSREAL _y);
+        vector2(void);
+        vector2(KSREAL _x, KSREAL _y);
 
         // arithmetic updates
-        void operator+=(const Vector2 &rhs);
-        void operator-=(const Vector2 &rhs);
+        void operator+=(const vector2 &rhs);
+        void operator-=(const vector2 &rhs);
 
         void operator*=(KSREAL scalar);
         void operator/=(KSREAL scalar);
@@ -43,18 +43,18 @@ namespace Kratos
         @returns
         A KSREAL representing the dot product value.
         */
-        KSREAL dotProduct(const Vector2 &rhs) const;
+        KSREAL dotProduct(const vector2 &rhs) const;
 
-        bool operator==(const Vector2 &rhs) const;
+        bool operator==(const vector2 &rhs) const;
 
         // arithmetic operations
-        Vector2 operator*(KSREAL scalar) const;
-        Vector2 operator/(KSREAL scalar) const;
-        Vector2 operator+(KSREAL scalar) const;
-        Vector2 operator-(KSREAL scalar) const;
+        vector2 operator*(KSREAL scalar) const;
+        vector2 operator/(KSREAL scalar) const;
+        vector2 operator+(KSREAL scalar) const;
+        vector2 operator-(KSREAL scalar) const;
 
-		Vector2 operator + (const Vector2 &rhs)const; 
-		Vector2 operator - (const Vector2 &rhs)const; 
+		vector2 operator + (const vector2 &rhs)const;
+		vector2 operator - (const vector2 &rhs)const;
 
         inline void Set(KSREAL _x, KSREAL _y);
 

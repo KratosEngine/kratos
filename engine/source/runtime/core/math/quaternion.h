@@ -4,7 +4,7 @@
 
 namespace Kratos
 {
-    class Quaternion
+    class quaternion
     {
     public:
         union
@@ -16,15 +16,15 @@ namespace Kratos
             };
         };
 
-        Quaternion(void);
-        Quaternion(KSREAL _x, KSREAL _y, KSREAL _z, KSREAL _w);
+        quaternion(void);
+        quaternion(KSREAL _x, KSREAL _y, KSREAL _z, KSREAL _w);
         void Set(KSREAL _x, KSREAL _y, KSREAL _z, KSREAL _w);
 
         void Normalize(void);
-		//Çóµã»ý
-		KSREAL Dot(const Quaternion& q)const;
-        //Çó¹²éî
-        Quaternion operator ~(void) const;
+		//ï¿½ï¿½ï¿½ï¿½
+		KSREAL Dot(const quaternion& q)const;
+        //ï¿½ï¿½ï¿½ï¿½
+        quaternion operator ~(void) const;
     };
 
 } // namespace Kratos

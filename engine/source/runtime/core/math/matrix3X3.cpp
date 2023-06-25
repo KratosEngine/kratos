@@ -1,35 +1,35 @@
 
 #include <string.h>
 
-#include "runtime/core/math/Matrix3X3.h"
+#include "runtime/core/math/matrix3X3.h"
 
 namespace Kratos
 {
-    const Matrix3X3 Matrix3X3::ms_CameraViewRight = Matrix3X3(0.0f, 0.0f, -1.0f,
+    const matrix3X3 matrix3X3::ms_CameraViewRight = matrix3X3(0.0f, 0.0f, -1.0f,
                                                               0.0f, 1.0f, 0.0f,
                                                               1.0f, 0.0f, 0.0f);
-    const Matrix3X3 Matrix3X3::ms_CameraViewLeft = Matrix3X3(0.0f, 0.0f, 1.0f,
+    const matrix3X3 matrix3X3::ms_CameraViewLeft = matrix3X3(0.0f, 0.0f, 1.0f,
                                                              0.0f, 1.0f, 0.0f,
                                                              -1.0f, 0.0f, 0.0f);
-    const Matrix3X3 Matrix3X3::ms_CameraViewUp = Matrix3X3(1.0f, 0.0f, 0.0f,
+    const matrix3X3 matrix3X3::ms_CameraViewUp = matrix3X3(1.0f, 0.0f, 0.0f,
                                                            0.0f, 0.0f, -1.0f,
                                                            0.0f, 1.0f, 0.0f);
-    const Matrix3X3 Matrix3X3::ms_CameraViewDown = Matrix3X3(1.0f, 0.0f, 0.0f,
+    const matrix3X3 matrix3X3::ms_CameraViewDown = matrix3X3(1.0f, 0.0f, 0.0f,
                                                              0.0f, 0.0f, 1.0f,
                                                              0.0f, -1.0f, 0.0f);
-    const Matrix3X3 Matrix3X3::ms_CameraViewFront = Matrix3X3(1.0f, 0.0f, 0.0f,
+    const matrix3X3 matrix3X3::ms_CameraViewFront = matrix3X3(1.0f, 0.0f, 0.0f,
                                                               0.0f, 1.0f, 0.0f,
                                                               0.0f, 0.0f, 1.0f);
-    const Matrix3X3 Matrix3X3::ms_CameraViewBack = Matrix3X3(-1.0f, 0.0f, 0.0f,
+    const matrix3X3 matrix3X3::ms_CameraViewBack = matrix3X3(-1.0f, 0.0f, 0.0f,
                                                              0.0f, 1.0f, 0.0f,
                                                              0.0f, 0.0f, -1.0f);
 
-    Matrix3X3::Matrix3X3()
+    matrix3X3::matrix3X3()
     {
         Identity();
     }
 
-    Matrix3X3::Matrix3X3(KSREAL m00, KSREAL m01, KSREAL m02,
+    matrix3X3::matrix3X3(KSREAL m00, KSREAL m01, KSREAL m02,
                          KSREAL m10, KSREAL m11, KSREAL m12,
                          KSREAL m20, KSREAL m21, KSREAL m22)
     {
@@ -44,9 +44,9 @@ namespace Kratos
         _22 = m22;
     }
 
-    Matrix3X3 Matrix3X3::operator*(KSREAL scalar) const
+    matrix3X3 matrix3X3::operator*(KSREAL scalar) const
     {
-        Matrix3X3 Temp;
+        matrix3X3 Temp;
         Temp.m[0] = m[0] * scalar;
         Temp.m[1] = m[1] * scalar;
         Temp.m[2] = m[2] * scalar;
@@ -60,9 +60,9 @@ namespace Kratos
         return Temp;
     }
 
-    Matrix3X3 Matrix3X3::operator+(KSREAL scalar) const
+    matrix3X3 matrix3X3::operator+(KSREAL scalar) const
     {
-        Matrix3X3 Temp;
+        matrix3X3 Temp;
         Temp.m[0] = m[0] + scalar;
         Temp.m[1] = m[1] + scalar;
         Temp.m[2] = m[2] + scalar;
@@ -76,9 +76,9 @@ namespace Kratos
         return Temp;
     }
 
-    Matrix3X3 Matrix3X3::operator-(KSREAL scalar) const
+    matrix3X3 matrix3X3::operator-(KSREAL scalar) const
     {
-        Matrix3X3 Temp;
+        matrix3X3 Temp;
         Temp.m[0] = m[0] - scalar;
         Temp.m[1] = m[1] - scalar;
         Temp.m[2] = m[2] - scalar;
@@ -92,10 +92,10 @@ namespace Kratos
         return Temp;
     }
 
-    Matrix3X3 Matrix3X3::operator+(const Matrix3X3 &matirx) const
+    matrix3X3 matrix3X3::operator+(const matrix3X3 &matirx) const
     {
 
-        Matrix3X3 Temp;
+        matrix3X3 Temp;
         Temp.m[0] = m[0] + matirx.m[0];
         Temp.m[1] = m[1] + matirx.m[1];
         Temp.m[2] = m[2] + matirx.m[2];
@@ -109,10 +109,10 @@ namespace Kratos
         return Temp;
     }
 
-    Matrix3X3 Matrix3X3::operator-(const Matrix3X3 &matirx) const
+    matrix3X3 matrix3X3::operator-(const matrix3X3 &matirx) const
     {
 
-        Matrix3X3 Temp;
+        matrix3X3 Temp;
         Temp.m[0] = m[0] - matirx.m[0];
         Temp.m[1] = m[1] - matirx.m[1];
         Temp.m[2] = m[2] - matirx.m[2];
@@ -126,7 +126,7 @@ namespace Kratos
         return Temp;
     }
 
-    void Matrix3X3::operator*=(KSREAL scalar)
+    void matrix3X3::operator*=(KSREAL scalar)
     {
         m[0] = m[0] * scalar;
         m[1] = m[1] * scalar;
@@ -139,7 +139,7 @@ namespace Kratos
         m[8] = m[8] * scalar;
     }
 
-    void Matrix3X3::operator+=(KSREAL scalar)
+    void matrix3X3::operator+=(KSREAL scalar)
     {
         m[0] = m[0] + scalar;
         m[1] = m[1] + scalar;
@@ -152,7 +152,7 @@ namespace Kratos
         m[8] = m[8] + scalar;
     }
 
-    void Matrix3X3::operator-=(KSREAL scalar)
+    void matrix3X3::operator-=(KSREAL scalar)
     {
         m[0] = m[0] - scalar;
         m[1] = m[1] - scalar;
@@ -165,7 +165,7 @@ namespace Kratos
         m[8] = m[8] - scalar;
     }
 
-    void Matrix3X3::operator+=(const Matrix3X3 &matirx)
+    void matrix3X3::operator+=(const matrix3X3 &matirx)
     {
         m[0] = m[0] + matirx.m[0];
         m[1] = m[1] + matirx.m[1];
@@ -178,7 +178,7 @@ namespace Kratos
         m[8] = m[8] + matirx.m[8];
     }
     /*----------------------------------------------------------------*/
-    void Matrix3X3::operator-=(const Matrix3X3 &matirx)
+    void matrix3X3::operator-=(const matrix3X3 &matirx)
     {
         m[0] = m[0] - matirx.m[0];
         m[1] = m[1] - matirx.m[1];
@@ -191,7 +191,7 @@ namespace Kratos
         m[8] = m[8] - matirx.m[8];
     }
 
-    bool Matrix3X3::operator==(const Matrix3X3 &v) const
+    bool matrix3X3::operator==(const matrix3X3 &v) const
     {
         for (unsigned int i = 0; i < 3; i++)
         {
@@ -206,7 +206,7 @@ namespace Kratos
         return true;
     }
 
-    void Matrix3X3::CreateRot(const Vector3 &U, const Vector3 &V, const Vector3 &N)
+    void matrix3X3::CreateRot(const vector3 &U, const vector3 &V, const vector3 &N)
     {
         _00 = U.x;
         _01 = U.y;
@@ -221,7 +221,7 @@ namespace Kratos
         _22 = N.z;
     }
 
-    void Matrix3X3::CreateScale(KSREAL fX, KSREAL fY, KSREAL fZ)
+    void matrix3X3::CreateScale(KSREAL fX, KSREAL fY, KSREAL fZ)
     {
         Identity();
         _00 = fX;
@@ -230,13 +230,13 @@ namespace Kratos
     }
 
     /*********************************** inline *************************************/
-    inline void Matrix3X3::Identity(void)
+    inline void matrix3X3::Identity(void)
     {
-        memset(m, 0, sizeof(Matrix3X3));
+        memset(m, 0, sizeof(matrix3X3));
         _00 = _11 = _22 = 1.0f;
     }
 
-    inline void Matrix3X3::TransposeOf(const Matrix3X3 &matirx)
+    inline void matrix3X3::TransposeOf(const matrix3X3 &matirx)
     {
         _00 = matirx._00;
         _10 = matirx._01;
@@ -251,7 +251,7 @@ namespace Kratos
         _22 = matirx._22;
     }
 
-    inline void Matrix3X3::InverseOf(const Matrix3X3 &matirx)
+    inline void matrix3X3::InverseOf(const matrix3X3 &matirx)
     {
         KSREAL det = matirx.Det();
 
@@ -273,16 +273,16 @@ namespace Kratos
         M[2][2] = det_inv * (matirx.M[0][0] * matirx.M[1][1] - matirx.M[1][0] * matirx.M[0][1]);
     }
 
-    inline KSREAL Matrix3X3::Det() const
+    inline KSREAL matrix3X3::Det() const
     {
         return (M[0][0] * (M[1][1] * M[2][2] - M[2][1] * M[1][2]) -
                 M[0][1] * (M[1][0] * M[2][2] - M[2][0] * M[1][2]) +
                 M[0][2] * (M[1][0] * M[2][1] - M[2][0] * M[1][1]));
     }
 
-    inline Matrix3X3 Matrix3X3::operator*(const Matrix3X3 &matirx) const
+    inline matrix3X3 matrix3X3::operator*(const matrix3X3 &matirx) const
     {
-        Matrix3X3 mResult;
+        matrix3X3 mResult;
         mResult.M[0][0] = 0;
         mResult.M[1][1] = 0;
         mResult.M[2][2] = 0;
@@ -295,7 +295,7 @@ namespace Kratos
         return mResult;
     }
 
-    inline Vector3 Matrix3X3::operator*(const Vector3 &vc) const
+    inline vector3 matrix3X3::operator*(const vector3 &vc) const
     {
         return vc * (*this);
     }
